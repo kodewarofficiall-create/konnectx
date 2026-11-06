@@ -1,1 +1,1 @@
-# konnectkxBussinessRegestration
+# KonnectXBussinessRegestration

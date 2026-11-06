@@ -1,9 +1,9 @@
-konnectkx site
+KonnectX site
 
 Pages:
   index.html         - start page
   portfolio/index.html - landing menu
-  home.html          - konnectkx website
+  home.html          - KonnectX website
   about.html
   categories.html
   categories.html

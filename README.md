@@ -1,1 +1,1 @@
-# konnectkx
+# KonnectX

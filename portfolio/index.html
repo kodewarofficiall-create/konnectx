@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="../assets/favicon.png">
 
-<title>konnectkx | Event Access Portal</title>
+<title>KonnectX | Event Access Portal</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -216,6 +216,34 @@ body {
     text-shadow: 0 0 15px rgba(90,255,190,.3);
 }
 
+.brand-title span {
+    color: var(--green);
+    text-shadow: 0 0 18px rgba(66,255,173,.7);
+}
+
+.brand-tagline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(8px, 2vw, 18px);
+    margin: -15px 0 22px;
+    color: #effff7;
+    font-size: clamp(11px, 2.2vw, 16px);
+    letter-spacing: .03em;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.brand-tagline::before,
+.brand-tagline::after {
+    width: clamp(16px, 5vw, 58px);
+    height: 4px;
+    flex: 0 0 auto;
+    background: var(--green);
+    box-shadow: 0 0 12px rgba(66,255,173,.75);
+    content: "";
+}
+
 .content-wrapper {
     width: 100%;
     max-width: 630px;
@@ -338,6 +366,20 @@ body {
     opacity: 1;
 
     pointer-events: none;
+}
+
+.powered-by {
+    margin-top: 10px;
+    color: var(--grey);
+    font-size: 14px;
+    letter-spacing: .08em;
+    text-align: center;
+}
+
+.powered-by span {
+    color: var(--green);
+    font-weight: 600;
+    text-shadow: 0 0 12px rgba(66,255,173,.35);
 }
 
 /* THREE COLUMN GRID */
@@ -1048,9 +1090,22 @@ body {
 
 @media (max-width: 599px) and (max-height: 700px) {
 
+    .site-logo {
+        top: 16px;
+        width: min(42vw, 145px);
+    }
+
     .main-page {
         justify-content: flex-start;
-        padding-top: 145px;
+        padding-top: 98px;
+    }
+
+    .content-wrapper {
+        transform: translateY(18px);
+    }
+
+    .social-section {
+        bottom: calc(14px + env(safe-area-inset-bottom, 0px));
     }
 
 }
@@ -1158,7 +1213,7 @@ body {
 <img
     class="site-logo"
     src="./event-logo.png"
-    alt="konnectkx Logo"
+    alt="KonnectX Logo"
 >
 
 <!-- ==============================
@@ -1167,7 +1222,8 @@ body {
 
 <main class="main-page" id="homePage">
 
-    <h1 class="brand-title">konnectkx</h1>
+    <h1 class="brand-title">Konnect<span>X</span></h1>
+    <p class="brand-tagline">Connections that create opportunities</p>
 
     <section class="content-wrapper">
 
@@ -1184,7 +1240,7 @@ body {
 
             <div class="menu-text">
 
-                <h2>Our Website konnectkx</h2>
+                <h2>Our Website KonnectX</h2>
 
                 <p>To check click here!</p>
 
@@ -1353,6 +1409,8 @@ body {
         </a>
 
     </div>
+
+    <p class="powered-by">Powered by <span>kodewar</span></p>
 
 </section>
 
