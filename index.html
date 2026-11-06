@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <title>Welcome to KonnectX</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { width: 100%; height: 100%; margin: 0; background: #000; }
+      body { overflow: hidden; }
+      video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #000;
+      }
+      .continue {
+        position: fixed;
+        right: 1rem;
+        bottom: 1rem;
+        padding: .65rem 1rem;
+        border: 1px solid rgba(255,255,255,.55);
+        border-radius: 999px;
+        background: rgba(0,0,0,.65);
+        color: #fff;
+        font: 500 14px/1.2 Arial, sans-serif;
+        text-decoration: none;
+      }
+      .status {
+        position: fixed;
+        left: 1rem;
+        bottom: 1rem;
+        max-width: calc(100% - 11rem);
+        color: #fff;
+        font: 14px/1.4 Arial, sans-serif;
+      }
+      .status:empty { display: none; }
+    </style>
+  </head>
+  <body>
+    <video id="intro" autoplay muted playsinline aria-label="KonnectX introduction"></video>
+    <p class="status" id="status" role="status"></p>
+    <a class="continue" href="portfolio/index.html">Skip intro</a>
+    <script>
+      const video = document.getElementById('intro');
+      const status = document.getElementById('status');
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      const desktopVideo = 'assets/videos/erasio_InShot_20261106_144915356%20(1)%20(1).mp4';
+      const mobileVideo = 'assets/videos/erasio_WhatsApp%20Video%202026-11-06%20at%209.58.36%20PM%20(1).mp4';
+
+      video.src = isMobile ? mobileVideo : desktopVideo;
+      video.addEventListener('ended', () => {
+        window.location.replace('portfolio/index.html');
+      });
+      video.addEventListener('error', () => {
+        status.textContent = 'The intro video could not be played. Use “Skip intro” to continue.';
+      });
+      video.play().catch(() => {
+        video.controls = true;
+        status.textContent = 'Press play to start the intro, or skip to continue.';
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#030706">
+  <link rel="icon" href="assets/favicon.png">
+  <title>Categories — KonnectX</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body class="categories-page">
+  <div class="announcement">A new way to find your next great connection <span>✦</span> <a href="categories.html">Explore the directory</a></div>
+  <header class="site-header">
+    <a class="brand" href="home.html"><img src="assets/logo-mark.png" alt="KonnectX emblem"><span>Konnect<span class="silver">X</span></span></a>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><i></i><i></i><i></i></button>
+    <nav>
+      <a href="home.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/><path d="M15.500 8.500l-2 5-5 2 2-5z"/></svg>Discover</a>
+      <a class="active" href="categories.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>Categories</a>
+      <a href="about.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>About</a>
+      <a href="enquiry.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v12H8l-4 3z"/></svg>Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a class="button button-small" href="categories.html#register">Join KonnectX <span>↗</span></a>
+    </div>
+  </header>
+  <main class="categories-main">
+    <section class="categories-hero">
+      <div class="categories-hero-copy">
+        <span class="eyebrow"><i></i>THE KONNECTX DIRECTORY</span>
+        <h1>Find your place<br class="categories-hero-break"> to <span class="gradient-text">connect.</span></h1>
+        <p>Explore the industries and specialties represented across our business network.</p>
+      </div>
+    </section>
+    <section class="cp-wrap" aria-label="Category directory">
+      <div class="cp-browser">
+        <aside class="cp-sidebar">
+          <span class="cp-sidebar-label">BROWSE INDUSTRIES</span>
+          <div class="cp-chips" id="cpChips"></div>
+        </aside>
+        <div class="cp-content">
+          <div class="cp-bar">
+            <div><span class="cp-content-kicker">CATEGORY GUIDE</span><h2 id="cpTitle">All subcategories</h2><small id="cpCount"></small></div>
+          </div>
+          <section class="cp-subcategories" id="cpSubcategories" aria-label="Browse subcategories"></section>
+        </div>
+      </div>
+    </section>
+  </main>
+<footer class="footer kx-footer">
+  <div class="kf-grid">
+    <div class="kf-brand">
+      <a class="brand" href="home.html"><img src="assets/logo-mark.png" alt=""><span>Konnect<span class="silver">X</span></span></a>
+      <p>Building digital bridges across businesses, people, and opportunities.</p>
+      <a class="kf-about-link" href="about.html">Discover KonnectX <span>↗</span></a>
+      <div class="kf-socials" aria-label="Social media">
+        <span role="img" aria-label="LinkedIn" title="LinkedIn">in</span>
+        <span role="img" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="kf-social-dot" cx="17.5" cy="6.5" r="1"/></svg></span>
+        <span role="img" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path class="kf-social-fill" d="m10 8.5 6 3.5-6 3.5z"/></svg></span>
+        <span role="img" aria-label="X" title="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4l14 16M19 4 5 20M4 4h4l12 16h-4z"/></svg></span>
+      </div>
+    </div>
+    <details class="kf-col footer-accordion footer-quick-links" open>
+      <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>QUICK LINKS</span></summary>
+      <div class="kf-links">
+        <a href="home.html">Home</a><a href="about.html">About Us</a><a href="categories.html">Services</a><a href="home.html#services">Clients</a><a href="enquiry.html">Contact Us</a>
+      </div>
+    </details>
+    <details class="kf-col footer-accordion footer-services" open>
+      <summary><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3M3 12h18M10 12v2h4v-2"/></svg><span>OUR SERVICES</span></summary>
+      <div class="kf-links">
+        <a href="categories.html?category=food">Restaurants &amp; Cafés</a><a href="categories.html?category=events">Events</a><a href="categories.html?category=property">Real Estate</a><a href="categories.html?category=medical">Health &amp; Wellness</a>
+      </div>
+    </details>
+    <details class="kf-col footer-accordion footer-company" open>
+      <summary><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5l8-2v17M12 9h8v11M2 20h20M7 7h2M7 11h2M7 15h2M15 12h2M15 16h2"/></svg><span>COMPANY</span></summary>
+      <div class="kf-links">
+        <a href="enquiry.html#business-register">Partner With Us</a><a href="home.html#services">Our Clients</a>
+      </div>
+    </details>
+    <details class="kf-col footer-accordion footer-help" open>
+      <summary><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.6 2.6 0 1 1 4.5 1.8c-1.2 1.1-2 1.5-2 3M12 17h.01"/></svg><span>HELP &amp; SUPPORT</span></summary>
+      <div class="kf-links">
+        <a href="enquiry.html">Contact Us</a><a href="enquiry.html">Account Support</a><a href="about.html">How KonnectX Works</a>
+      </div>
+    </details>
+    <div class="kf-col kf-note">
+      <span class="eyebrow">STAY IN THE LOOP</span>
+      <h2>Good connections, <span class="note-title-accent">delivered.</span></h2>
+      <p>Subscribe for the latest updates and insights.</p>
+      <form class="note-form" id="noteForm">
+        <label class="note-email-field">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M4 6.5h16v11H4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m5 7.5 7 5.5 7-5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <input type="email" name="email" placeholder="Enter your email address" aria-label="Enter your email address" required>
+        </label>
+        <button class="button" type="submit" aria-label="Subscribe">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="m21 3-7.5 18-3.8-7.7L2 9.5 21 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9.7 13.3 5.2-5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+        <div class="note-msg" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 KonnectX. All rights reserved.</span>
+    <span class="footer-meta">
+      <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.5" fill="currentColor"/></svg>India</span>
+      <i aria-hidden="true">|</i>
+      <span>Global Delivery</span>
+      <i aria-hidden="true">|</i>
+      <span>24 × 7 Support</span>
+    </span>
+  </div>
+</footer></body></html>

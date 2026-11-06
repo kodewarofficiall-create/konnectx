@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#17191d">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <title>Business Invitation | Registration</title>
+
+  <link
+    href="https://script.google.com/macros/s/AKfycbw_AZLlQBcOlWrtAGTZwt7kg4hHidNlO-atyQdINN0Ou-MJNLQHM9Pm2166BMryOd6k5g/exec">
+
+  <style>
+    :root {
+      --black: #090a0c;
+      --dark: #17191d;
+      --silver: #c9ccd2;
+      --white: #f7f7f8;
+      --muted: #a6a9b0;
+      --gold: #d6bd8b;
+      --line: rgba(255, 255, 255, .16);
+      --panel: rgba(22, 24, 29, .82);
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --sans: "DM Sans", sans-serif;
+
+      --cover: url("./invitation-cover-home-current.png");
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden !important;
+      /* strictly prevents outer window scrollbars */
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--sans);
+      color: var(--white);
+      background: radial-gradient(ellipse at center, #383b42, #090a0c 80%);
+      position: fixed;
+      inset: 0;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    /* ================= ENVELOPE OPENING ================= */
+
+    .stage {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      max-width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      height: 100svh;
+      border: none;
+      padding: 0;
+      background: transparent;
+      z-index: 10;
+      overflow: hidden;
+      contain: paint;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: var(--cover) center / cover no-repeat;
+      filter: blur(20px) brightness(.32) saturate(.35);
+      transform: scale(1.04);
+      pointer-events: none;
+    }
+
+    .stage.open::before {
+      opacity: 0;
+      transition: opacity .8s ease;
+    }
+
+    .art-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      --seal-control-size: max(90px, 18.3vw, 31.8svh);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .left-door {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 50%;
+      z-index: 2;
+      will-change: transform;
+    }
+
+    .door-leaf {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .door-leaf::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 200%;
+      background: var(--cover) center 54.8% / cover no-repeat;
+      pointer-events: none;
+    }
+
+    .door-leaf.right {
+      inset: 0 0 0 auto;
+      width: 50%;
+      will-change: transform;
+    }
+
+    .door-leaf.right::before {
+      left: -100%;
+    }
+
+    .door-leaf.right::after {
+      content: "";
+      position: absolute;
+      top: calc(54.8% - var(--seal-control-size) * .58);
+      left: 0;
+      width: calc(var(--seal-control-size) * .58);
+      height: calc(var(--seal-control-size) * 1.16);
+      background: radial-gradient(ellipse at left center,
+          rgba(4, 6, 5, .99) 0 38%,
+          rgba(4, 6, 5, .92) 58%,
+          rgba(4, 6, 5, .55) 78%,
+          transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse at left center, #000 0 38%, transparent 100%);
+      mask-image: radial-gradient(ellipse at left center, #000 0 38%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .stage.open .left-door {
+      animation: door-open-left 2.2s cubic-bezier(.65, 0, .35, 1) forwards;
+    }
+
+    .stage.open .door-leaf.right {
+      animation: door-open-right 2.2s cubic-bezier(.65, 0, .35, 1) forwards;
+    }
+
+    @keyframes door-open-left {
+      100% {
+        transform: translateX(-200%);
+      }
+    }
+
+    @keyframes door-open-right {
+      100% {
+        transform: translateX(200%);
+      }
+    }
+
+    .stage.gone {
+      display: none;
+    }
+
+    .light-ring {
+      position: absolute;
+      top: 54.8%;
+      left: 100%;
+      z-index: 3;
+      width: calc(var(--seal-control-size) + clamp(8px, 2vw, 16px));
+      aspect-ratio: 1;
+      border: 1px solid rgba(142, 255, 205, .88);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(80, 255, 177, .55),
+        inset 0 0 9px rgba(80, 255, 177, .2);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      animation: light-ring-pulse 2.8s ease-out infinite;
+    }
+
+    .light-ring.second {
+      animation-delay: 1.4s;
+    }
+
+    @keyframes light-ring-pulse {
+      0% {
+        opacity: .8;
+        transform: translate(-50%, -50%) scale(.94);
+      }
+
+      80%,
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.45);
+      }
+    }
+
+    .logo-trigger {
+      position: absolute;
+      top: 54.8%;
+      left: 100%;
+      z-index: 4;
+      width: var(--seal-control-size);
+      aspect-ratio: 1;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .opening-logo {
+      position: absolute;
+      width: 116%;
+      height: 116%;
+      left: -8%;
+      top: -8%;
+      border-radius: 50%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .logo-trigger:hover,
+    .logo-trigger:focus-visible {
+      outline: 3px solid rgba(235, 255, 245, .9);
+      outline-offset: 7px;
+    }
+
+    .logo-trigger:hover {
+      filter: brightness(1.08);
+      transform: translate(-50%, -50%) scale(1.07);
+    }
+
+    .stage.open .logo-trigger {
+      pointer-events: none;
+    }
+
+    .hint {
+      position: absolute;
+      bottom: 4.5%;
+      left: 0;
+      z-index: 4;
+      width: 100%;
+      padding: 0 16px;
+      text-align: center;
+      font: 600 clamp(13px, 2.4vw, 19px) var(--serif);
+      color: white;
+      letter-spacing: 2.5px;
+      text-shadow: 0 2px 12px black, 0 0 20px rgba(255, 255, 255, .4);
+      pointer-events: none;
+      transition: opacity .4s ease;
+    }
+
+    .stage.open .hint {
+      opacity: 0;
+      animation: none;
+    }
+
+    /* ================= BLURRED BACKGROUND ================= */
+
+    .reveal {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      max-width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      height: 100svh;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      padding: clamp(12px, 3vw, 32px);
+      opacity: 0;
+      transform: translateY(15px) scale(.97);
+      pointer-events: none;
+      transition: opacity .65s ease 1.55s,
+        transform .65s ease 1.55s;
+      overflow: hidden;
+      isolation: isolate;
+      contain: paint;
+    }
+
+    .reveal::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image: var(--cover);
+      background-size: cover;
+      background-position: center;
+      filter: blur(20px) brightness(.5) saturate(.3);
+      transform: scale(1.04);
+      pointer-events: none;
+    }
+
+    .reveal::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(135deg,
+          rgba(220, 224, 232, .12),
+          rgba(5, 6, 8, .78));
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+      transition: none;
+    }
+
+    /* ================= FORM PANEL ================= */
+
+    .panel {
+      width: min(820px, 100%);
+      max-height: calc(100vh - clamp(24px, 6vw, 64px));
+      max-height: calc(100svh - clamp(24px, 6vw, 64px));
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, .25);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 28px 90px rgba(0, 0, 0, .6);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, .04);
+    }
+
+    .brand-mark {
+      height: 48px;
+      width: 48px;
+      flex-shrink: 0;
+      display: block;
+      border-radius: 50%;
+      border: 1px solid rgba(120, 255, 200, .55);
+      background: #070b0b;
+      object-fit: cover;
+      box-shadow: 0 0 16px rgba(60, 255, 180, .2);
+    }
+
+    .heading h1 {
+      font: 600 clamp(25px, 4vw, 35px) var(--serif);
+      letter-spacing: 1px;
+    }
+
+    .heading p {
+      margin-top: 5px;
+      font-size: 11px;
+      color: var(--silver);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .form-scroll {
+      flex: 1 1 auto;
+      padding: 26px 30px;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, .25) transparent;
+    }
+
+    .form-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .form-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .form-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, .25);
+      border-radius: 6px;
+    }
+
+    .form-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, .45);
+    }
+
+    .intro {
+      margin-bottom: 23px;
+      color: #d0d2d7;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* ================= FORM FIELDS ================= */
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 19px 18px;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      color: #f1f1f3;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .required {
+      color: var(--gold);
+      margin-left: 3px;
+    }
+
+    .control {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px;
+      border: 1px solid rgba(255, 255, 255, .22);
+      border-radius: 11px;
+      background: rgba(5, 6, 8, .48);
+      color: white;
+      outline: none;
+      transition: .25s ease;
+    }
+
+    .control::placeholder {
+      color: #999da6;
+    }
+
+    .control:focus {
+      border-color: #e0e2e7;
+      background: rgba(5, 6, 8, .72);
+      box-shadow: 0 0 0 3px rgba(220, 224, 232, .12);
+    }
+
+    select.control {
+      color: white;
+      cursor: pointer;
+    }
+
+    select.control option {
+      background: #17191d;
+      color: white;
+    }
+
+    textarea.control {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .file-control {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .file-note {
+      display: block;
+      margin-top: 7px;
+      color: #aeb1b8;
+      font-size: 11px;
+    }
+
+    .error {
+      min-height: 0;
+      margin-top: 0;
+      color: #ff9999;
+      font-size: 12px;
+    }
+
+    .error:not(:empty) {
+      margin-top: 6px;
+    }
+
+    .invalid .control {
+      border-color: #ff7777;
+      box-shadow: 0 0 0 2px rgba(255, 80, 80, .12);
+    }
+
+    /* ================= SUBMIT BUTTON ================= */
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .action-buttons {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 10px;
+    }
+
+    .required-note {
+      color: #b8bbc2;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .submit {
+      padding: 14px 27px;
+      border: 1px solid white;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #f4f4f5, #aeb2bb);
+      color: #17191d;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, .3);
+      transition: .3s ease;
+    }
+
+    .submit:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.1);
+    }
+
+    .submit:disabled {
+      opacity: .6;
+      cursor: wait;
+      transform: none;
+    }
+
+    .form-status {
+      min-height: 20px;
+      margin-top: 14px;
+      color: var(--gold);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* ================= SUCCESS POPUP ================= */
+
+    .success {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, .75);
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s ease;
+    }
+
+    .success.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .msg {
+      width: min(430px, 100%);
+      padding: 35px 25px;
+      text-align: center;
+      background: rgba(24, 26, 31, .96);
+      border: 1px solid rgba(255, 255, 255, .25);
+      border-radius: 22px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .6);
+      transform: translateY(20px) scale(.95);
+      transition: .5s ease;
+    }
+
+    .success.show .msg {
+      transform: none;
+    }
+
+    .check {
+      width: 75px;
+      height: 75px;
+      margin: 0 auto 20px;
+    }
+
+    .check circle {
+      fill: #e5e7eb;
+    }
+
+    .check path {
+      fill: none;
+      stroke: #17191d;
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+    }
+
+    .success.show .check path {
+      animation: draw .6s ease .3s forwards;
+    }
+
+    @keyframes draw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .msg h2 {
+      font: 600 32px var(--serif);
+      margin-bottom: 10px;
+    }
+
+    .msg p {
+      color: #c9ccd2;
+      line-height: 1.6;
+      margin-bottom: 23px;
+    }
+
+    /* ================= PAPER BLAST ================= */
+
+    #confetti {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 30;
+      pointer-events: none;
+    }
+
+    /* ================= TABLET ================= */
+
+    @media (min-width: 700px) and (max-width: 1099px) {
+      .art-frame {
+        --seal-control-size: clamp(160px, 24vw, 210px);
+      }
+
+      .reveal {
+        padding: 18px clamp(20px, 8vw, 64px);
+      }
+
+      .panel {
+        width: min(650px, 100%);
+        max-height: calc(100svh - 36px);
+      }
+
+      .panel-head {
+        padding: 18px clamp(20px, 4vw, 32px);
+      }
+
+      .brand-mark {
+        width: 60px;
+        height: 60px;
+      }
+
+      .form-scroll {
+        padding: 20px clamp(18px, 4vw, 32px);
+      }
+
+      .intro {
+        font-size: 16px;
+        line-height: 1.55;
+        margin-bottom: 20px;
+      }
+
+      .fields {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .field label {
+        font-size: 16px;
+      }
+
+      .control {
+        min-height: 52px;
+      }
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 699px) {
+
+      .art-frame {
+        --seal-control-size: clamp(112px, 36vw, 145px);
+      }
+
+      .opening-logo {
+        transform: rotate(5deg);
+      }
+
+      #stage,
+      #reveal {
+        --cover: url("./invitation-cover-mobile.png");
+      }
+
+      .stage::before {
+        background-position: center;
+        background-size: auto 100%;
+      }
+
+      .door-leaf::before {
+        background-position: center;
+        background-size: auto 100%;
+      }
+
+      html,
+      body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        overflow-x: clip;
+        overflow-y: hidden;
+      }
+
+      .stage {
+        width: 100%;
+        max-width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        height: 100svh;
+      }
+
+      .reveal {
+        padding: max(12px, env(safe-area-inset-top)) clamp(14px, 6vw, 24px) max(12px, env(safe-area-inset-bottom));
+        display: grid;
+        place-items: center;
+        overflow-y: hidden;
+        overflow-x: hidden;
+        overflow-x: clip;
+        scrollbar-width: none;
+      }
+
+      .reveal::-webkit-scrollbar {
+        display: none;
+      }
+
+      .panel {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
+        min-height: 0;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, .25);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, .55);
+      }
+
+      .panel-head {
+        padding: 16px clamp(16px, 5vw, 24px);
+      }
+
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+      }
+
+      .heading h1 {
+        font-size: 24px;
+      }
+
+      .heading p {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+      }
+
+      .form-scroll {
+        flex: 1 1 auto;
+        padding: 18px clamp(16px, 5vw, 24px) calc(20px + env(safe-area-inset-bottom, 8px));
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .fields {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .field {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .field label {
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .control {
+        min-height: 52px;
+        font-size: 16px;
+        /* 16px prevents iOS Safari auto-zoom which pushes content out to the right */
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .file-control {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      .action-buttons {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .submit {
+        width: 100%;
+        min-height: 49px;
+        white-space: normal;
+        text-align: center;
+      }
+
+      .required-note {
+        font-size: 11px;
+        word-break: break-word;
+      }
+
+      .intro {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+    }
+
+    /* ================= SMALL MOBILE ================= */
+
+    @media (max-width: 380px) {
+      .panel-head {
+        padding: 12px 10px;
+        gap: 10px;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+      }
+
+      .heading h1 {
+        font-size: 21px;
+      }
+
+      .heading p {
+        font-size: 9px;
+        letter-spacing: 1.2px;
+      }
+
+      .form-scroll {
+        padding: 16px 14px calc(18px + env(safe-area-inset-bottom, 8px));
+      }
+
+      .control {
+        padding: 10px;
+        font-size: 16px;
+      }
+
+      .msg {
+        padding: 24px 14px;
+      }
+    }
+
+    /* ================= DESKTOP ================= */
+
+    @media (min-width: 1100px) {
+      .panel {
+        width: min(850px, 100%);
+      }
+
+      .form-scroll {
+        padding: 30px 35px;
+      }
+
+      .fields {
+        gap: 21px 24px;
+      }
+    }
+
+    /* ================= LANDSCAPE MOBILE ================= */
+
+    @media (orientation: landscape) and (max-height: 600px) {
+      .reveal {
+        padding: 8px;
+      }
+
+      .panel {
+        max-height: 96svh;
+      }
+
+      .panel-head {
+        padding: 10px 18px;
+      }
+
+      .form-scroll {
+        padding: 14px 20px;
+      }
+
+      .fields {
+        gap: 12px 14px;
+      }
+
+      .control {
+        min-height: 42px;
+        padding: 9px 12px;
+      }
+    }
+
+    /* ================= ACCESSIBILITY ================= */
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .stage.open .left-door,
+      .stage.open .door-leaf.right {
+        animation-duration: .7s !important;
+        animation-timing-function: ease-out !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ENVELOPE OPENING PAGE -->
+
+  <div class="stage" id="stage" aria-label="Invitation envelope">
+    <div class="art-frame">
+      <div class="left-door">
+        <div class="door-leaf left" aria-hidden="true"></div>
+        <span class="light-ring" aria-hidden="true"></span>
+        <span class="light-ring second" aria-hidden="true"></span>
+        <button class="logo-trigger" id="logoTrigger" type="button" aria-label="Open the registration form"
+          aria-controls="reveal" aria-expanded="false">
+          <img class="opening-logo" src="./registration-logo-home.png" alt="">
+        </button>
+      </div>
+      <div class="door-leaf right" aria-hidden="true"></div>
+      <div class="hint">Press the logo to open</div>
+    </div>
+  </div>
+
+  <!-- REGISTRATION PAGE -->
+
+  <main class="reveal" id="reveal" aria-hidden="true">
+
+    <section class="panel">
+
+      <header class="panel-head">
+        <img class="brand-mark" src="./registration-logo-home.png" alt="Invitation logo">
+
+        <div class="heading">
+          <h1>KonnectX</h1>
+          <p>Business Registration</p>
+        </div>
+      </header>
+
+      <div class="form-scroll">
+
+        <p class="intro">
+          Please share your details below. All fields marked with
+          an asterisk are required. Your information will be used
+          for this registration.
+        </p>
+
+        <form id="registrationForm" novalidate>
+
+          <div class="fields">
+
+            <div class="field" data-field="name">
+              <label for="name">Name <span class="required">*</span></label>
+              <input class="control" id="name" name="name" autocomplete="name" placeholder="Enter your full name">
+              <p class="error" aria-live="polite"></p>
+            </div>
+
+            <div class="field" data-field="phone">
+              <label for="phone">Phone Number <span class="required">*</span></label>
+              <input class="control" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                placeholder="Enter your phone number">
+              <p class="error" aria-live="polite"></p>
+            </div>
+
+            <div class="field" data-field="email">
+              <label for="email">Email <span class="required">*</span></label>
+              <input class="control" id="email" name="email" type="email" autocomplete="email"
+                placeholder="name@example.com">
+              <p class="error" aria-live="polite"></p>
+            </div>
+
+            <div class="field" data-field="business">
+              <label for="business">Name of the Business <span class="required">*</span></label>
+              <input class="control" id="business" name="business" placeholder="Enter business name">
+              <p class="error" aria-live="polite"></p>
+            </div>
+
+            <div class="field" data-field="category">
+              <label for="category">Category <span class="required">*</span></label>
+              <input class="control" id="category" name="category" placeholder="Enter your business category">
+              <p class="error" aria-live="polite"></p>
+            </div>
+
+            <div class="field" data-field="service">
+              <label for="service">Service <span class="required">*</span></label>
+
+              <select class="control" id="service" name="service">
+                <option value="">Select a service tier</option>
+                <option value="Luxury">Luxury</option>
+                <option value="Tier-1">Tier-1</option>
+                <option value="Tier-2">Tier-2</option>
+                <option value="Tier-3">Tier-3</option>
+              </select>
+
+              <p class="error" aria-live="polite"></p>
+            </div>
+
+            <div class="field full" data-field="audience">
+              <label for="audience">Audience <span class="required">*</span></label>
+              <textarea class="control" id="audience" name="audience"
+                placeholder="Describe your target audience"></textarea>
+              <p class="error" aria-live="polite"></p>
+            </div>
+
+            <div class="field full" data-field="receipt">
+              <label for="receipt">Payment Receipt <span class="required">*</span></label>
+
+              <input class="control file-control" id="receipt" name="receipt" type="file" accept="image/*,.pdf">
+
+              <span class="file-note">
+                Accepted formats: Image or PDF · Maximum size: 5 MB
+              </span>
+
+              <p class="error" aria-live="polite"></p>
+            </div>
+
+          </div>
+
+          <div class="actions">
+            <span class="required-note">
+              * All fields are mandatory. Please check your details before submitting.
+            </span>
+
+            <div class="action-buttons">
+              <button class="submit" id="submitBtn" type="submit">
+                Submit Registration ↗
+              </button>
+            </div>
+          </div>
+
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- SUCCESS POPUP -->
+
+  <div class="success" id="success" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+
+    <div class="msg">
+
+      <svg class="check" viewBox="0 0 76 76">
+        <circle cx="38" cy="38" r="38"></circle>
+        <path d="M23 39l10 10 21-22"></path>
+      </svg>
+
+      <h2 id="successTitle">Submitted Successfully!</h2>
+
+      <p id="successDescription">
+        Thank you for registering. Your details have been
+        successfully submitted.
+      </p>
+
+    </div>
+  </div>
+
+  <canvas id="confetti"></canvas>
+
+  <script>
+    (() => {
+
+      const stage = document.getElementById("stage");
+      const logoTrigger = document.getElementById("logoTrigger");
+      const reveal = document.getElementById("reveal");
+      const form = document.getElementById("registrationForm");
+      const success = document.getElementById("success");
+      const submitBtn = document.getElementById("submitBtn");
+      const status = document.getElementById("formStatus");
+      const successTitle = document.getElementById("successTitle");
+      const successDescription = document.getElementById("successDescription");
+
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      /*
+        IMPORTANT:
+        Paste your deployed Google Apps Script Web App URL here.
+      */
+      const SUBMIT_ENDPOINT = "https://script.google.com/macros/s/AKfycbwBdtJcsjsjTb3VeIosJB6wSf1-kdEi56Rv7GJV_3G1J9gXubG0mNnpWQ2diWkX_AQFGg/exec";
+
+      /* OPEN ENVELOPE */
+
+      let opened = false;
+
+      logoTrigger.addEventListener("click", () => {
+
+        if (opened) return;
+
+        opened = true;
+
+        stage.classList.add("open");
+        reveal.classList.add("show");
+        reveal.setAttribute("aria-hidden", "false");
+        logoTrigger.setAttribute("aria-expanded", "true");
+
+        setTimeout(() => {
+          stage.classList.add("gone");
+        }, reduceMotion ? 850 : 2500);
+
+      });
+
+      if (new URLSearchParams(window.location.search).get("open") === "1") {
+        logoTrigger.click();
+      }
+
+      /* FIELD NAMES */
+
+      const fieldNames = {
+        name: "Name",
+        phone: "Phone Number",
+        email: "Email",
+        business: "Name of the Business",
+        category: "Category",
+        service: "Service",
+        audience: "Audience",
+        receipt: "Payment Receipt"
+      };
+
+      /* DISPLAY FIELD ERRORS */
+
+      function setError(key, message) {
+
+        const wrapper = form.querySelector(
+          `[data-field="${key}"]`
+        );
+
+        const input = form.elements[key];
+
+        wrapper.classList.toggle("invalid", Boolean(message));
+
+        wrapper.querySelector(".error").textContent = message || "";
+
+        if (message) {
+          input.setAttribute("aria-invalid", "true");
+        } else {
+          input.removeAttribute("aria-invalid");
+        }
+
+      }
+
+      /* VALIDATE EACH FIELD */
+
+      function validateOne(key) {
+
+        const input = form.elements[key];
+        let message = "";
+
+        if (key === "receipt") {
+
+          const file = input.files[0];
+
+          if (!file) {
+            message = "Please upload your payment receipt.";
+          } else if (file.size > 5 * 1024 * 1024) {
+            message = "Receipt must be 5 MB or smaller.";
+          } else if (
+            !file.type.startsWith("image/") &&
+            file.type !== "application/pdf"
+          ) {
+            message = "Only image or PDF files are allowed.";
+          }
+
+        } else if (!String(input.value || "").trim()) {
+
+          message = `Please enter ${fieldNames[key].toLowerCase()}.`;
+
+        } else if (key === "email") {
+
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+          if (!emailPattern.test(input.value.trim())) {
+            message = "Please enter a valid email address.";
+          }
+
+        } else if (key === "phone") {
+
+          const phonePattern = /^\+?[0-9\s().-]{7,18}$/;
+
+          if (!phonePattern.test(input.value.trim())) {
+            message = "Please enter a valid phone number.";
+          }
+
+        }
+
+        setError(key, message);
+
+        return !message;
+      }
+
+      function validateForm() {
+
+        let valid = true;
+        let firstInvalid = null;
+
+        Object.keys(fieldNames).forEach(key => {
+
+          const result = validateOne(key);
+
+          if (!result) {
+
+            valid = false;
+
+            if (!firstInvalid) {
+              firstInvalid = form.elements[key];
+            }
+
+          }
+
+        });
+
+        if (firstInvalid) {
+
+          firstInvalid.focus();
+
+          firstInvalid.scrollIntoView({
+            behavior: reduceMotion ? "auto" : "smooth",
+            block: "center"
+          });
+
+        }
+
+        return valid;
+      }
+
+      /* LIVE VALIDATION */
+
+      Object.keys(fieldNames).forEach(key => {
+
+        const input = form.elements[key];
+
+        ["input", "change", "blur"].forEach(eventName => {
+
+          input.addEventListener(eventName, () => {
+
+            const wrapper = form.querySelector(
+              `[data-field="${key}"]`
+            );
+
+            if (
+              wrapper.classList.contains("invalid") ||
+              eventName === "blur"
+            ) {
+              validateOne(key);
+            }
+
+          });
+
+        });
+
+      });
+
+      /* CONVERT RECEIPT TO BASE64 */
+
+      function fileToDataURL(file) {
+
+        return new Promise((resolve, reject) => {
+
+          const reader = new FileReader();
+
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = () => reject(
+            new Error("Unable to read the receipt.")
+          );
+
+          reader.readAsDataURL(file);
+
+        });
+
+      }
+
+      function waitForSubmissionStatus(requestId) {
+        return new Promise((resolve, reject) => {
+          const callbackName = "__konnectXSubmissionStatus";
+          const deadline = Date.now() + 60000;
+
+          function checkStatus() {
+            if (Date.now() >= deadline) {
+              reject(new Error(
+                "The submission could not be confirmed. Check the Registrations sheet before trying again."
+              ));
+              return;
+            }
+
+            const script = document.createElement("script");
+            const statusUrl = new URL(SUBMIT_ENDPOINT);
+            statusUrl.searchParams.set("requestId", requestId);
+            statusUrl.searchParams.set("callback", callbackName);
+            statusUrl.searchParams.set("_", Date.now().toString());
+
+            window[callbackName] = result => {
+              script.remove();
+              delete window[callbackName];
+
+              if (result.status === "pending") {
+                window.setTimeout(checkStatus, 1000);
+              } else if (result.status === "complete" && result.success) {
+                resolve(result);
+              } else {
+                reject(new Error(result.message || "The registration could not be saved."));
+              }
+            };
+
+            script.onerror = () => {
+              script.remove();
+              delete window[callbackName];
+              reject(new Error(
+                "Unable to verify the submission. Check the Registrations sheet before trying again."
+              ));
+            };
+            script.src = statusUrl.toString();
+            document.head.appendChild(script);
+          }
+
+          checkStatus();
+        });
+      }
+
+      /* SUBMIT FORM */
+
+      form.addEventListener("submit", async event => {
+
+        event.preventDefault();
+
+        status.textContent = "";
+
+        if (!validateForm()) {
+
+          status.textContent =
+            "Please correct the highlighted fields.";
+
+          return;
+
+        }
+
+        if (
+          !SUBMIT_ENDPOINT ||
+          SUBMIT_ENDPOINT.includes("PASTE_YOUR")
+        ) {
+
+          status.textContent =
+            "Please connect your Google Apps Script URL before submitting.";
+
+          return;
+
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
+
+        try {
+
+          const receipt = form.elements.receipt.files[0];
+
+          const payload = {
+
+            requestId: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 14)}`,
+
+            name: form.elements.name.value.trim(),
+
+            phone: form.elements.phone.value.trim(),
+
+            email: form.elements.email.value.trim(),
+
+            business: form.elements.business.value.trim(),
+
+            category: form.elements.category.value.trim(),
+
+            service: form.elements.service.value,
+
+            audience: form.elements.audience.value.trim(),
+
+            receiptName: receipt.name,
+
+            receiptType: receipt.type,
+
+            receiptData: await fileToDataURL(receipt)
+
+          };
+
+          // Apps Script's cross-origin POST response is opaque, so verify the write with a JSONP status check.
+          await fetch(SUBMIT_ENDPOINT, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify(payload)
+          });
+
+          await waitForSubmissionStatus(payload.requestId);
+
+          form.reset();
+
+          Object.keys(fieldNames).forEach(key => {
+            setError(key, "");
+          });
+
+          status.textContent = "";
+
+          showSuccess();
+
+        } catch (error) {
+
+          console.error("Submission error:", error);
+
+          status.textContent = error.message && !error.message.includes("fetch")
+            ? error.message
+            : "Submission failed. Please check your connection and try again.";
+
+        } finally {
+
+          submitBtn.disabled = false;
+
+          submitBtn.textContent = "Submit Registration ↗";
+
+        }
+
+      });
+
+      /* SUCCESS MESSAGE */
+
+      function showSuccess() {
+        successTitle.textContent = "Submitted Successfully!";
+        successDescription.textContent =
+          "Thank you for registering. Your details have been successfully submitted.";
+
+        success.classList.add("show");
+
+        blastConfetti();
+
+        document.getElementById("successTitle").focus();
+
+      }
+
+      /* PAPER BLAST ANIMATION */
+
+      const canvas = document.getElementById("confetti");
+      const ctx = canvas.getContext("2d");
+
+      let pieces = [];
+      let animationFrame = null;
+
+      const colors = [
+        "#ffffff",
+        "#d9dce1",
+        "#aeb4bf",
+        "#e8cf9a",
+        "#c9a45c",
+        "#f5f0e6"
+      ];
+
+      function resizeCanvas() {
+
+        const ratio = window.devicePixelRatio || 1;
+
+        canvas.width = window.innerWidth * ratio;
+        canvas.height = window.innerHeight * ratio;
+
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      }
+
+      resizeCanvas();
+
+      window.addEventListener("resize", resizeCanvas);
+
+      function blastConfetti() {
+
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const paperCount = reduceMotion ? 70 : 160;
+        const launchSpeed = reduceMotion ? 10 : 15;
+        const speedRange = reduceMotion ? 8 : 11;
+
+        for (const side of ["left", "right"]) {
+          for (let i = 0; i < paperCount; i++) {
+
+            const angle = side === "left"
+              ? -1.35 + Math.random() * .8
+              : -Math.PI + .55 + Math.random() * .8;
+
+            const speed = launchSpeed + Math.random() * speedRange;
+
+            pieces.push({
+
+              x: side === "left"
+                ? Math.random() * 18
+                : width - Math.random() * 18,
+              y: height - Math.random() * 18,
+
+              vx: Math.cos(angle) * speed,
+
+              vy: Math.sin(angle) * speed - 1,
+
+              width: 7 + Math.random() * 9,
+
+              height: 10 + Math.random() * 12,
+
+              rotation: Math.random() * 6,
+
+              rotationSpeed: (Math.random() - .5) * (reduceMotion ? .16 : .3),
+
+              color: colors[
+                Math.floor(Math.random() * colors.length)
+              ]
+
+            });
+
+          }
+        }
+
+        if (!animationFrame) {
+          animationFrame = requestAnimationFrame(animateConfetti);
+        }
+
+      }
+
+      function animateConfetti() {
+
+        ctx.clearRect(
+          0,
+          0,
+          window.innerWidth,
+          window.innerHeight
+        );
+
+        for (let i = pieces.length - 1; i >= 0; i--) {
+
+          const piece = pieces[i];
+
+          piece.vy += .14;
+          piece.vx *= .992;
+
+          piece.x += piece.vx;
+          piece.y += piece.vy;
+
+          piece.rotation += piece.rotationSpeed;
+
+          if (piece.y > window.innerHeight + 30) {
+
+            pieces.splice(i, 1);
+            continue;
+
+          }
+
+          ctx.save();
+
+          ctx.translate(piece.x, piece.y);
+          ctx.rotate(piece.rotation);
+
+          ctx.fillStyle = piece.color;
+
+          ctx.fillRect(
+            -piece.width / 2,
+            -piece.height / 2,
+            piece.width,
+            piece.height
+          );
+
+          ctx.restore();
+
+        }
+
+        if (pieces.length) {
+
+          animationFrame = requestAnimationFrame(animateConfetti);
+
+        } else {
+
+          animationFrame = null;
+
+          ctx.clearRect(
+            0,
+            0,
+            window.innerWidth,
+            window.innerHeight
+          );
+
+        }
+
+      }
+
+    })();
+  </script>
+
+</body>
+
+</html>

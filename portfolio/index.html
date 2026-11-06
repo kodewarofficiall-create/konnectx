@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+
+<title>KonnectX | Event Access Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+
+/* ==============================
+   GLOBAL
+============================== */
+
+:root {
+    --green: #42ffad;
+    --white: #f4fff9;
+    --grey: #a8b7b0;
+    --panel: rgba(19,25,27,.85);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background: #050b0d;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    isolation: isolate;
+}
+
+/* ==============================
+   BACKGROUND
+============================== */
+
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(2,7,9,.18),
+            rgba(2,7,9,.08) 55%,
+            rgba(2,7,9,.3)
+        ),
+        url("./earth-horizon.png");
+
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+}
+
+.background::before {
+    content: "";
+    position: absolute;
+    inset: -10%;
+
+    background:
+        radial-gradient(ellipse at 18% 55%, rgba(35,255,158,.13), transparent 42%),
+        radial-gradient(ellipse at 78% 40%, rgba(42,204,173,.11), transparent 45%),
+        radial-gradient(ellipse at 52% 82%, rgba(64,255,184,.1), transparent 38%);
+
+    pointer-events: none;
+}
+
+.background::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: radial-gradient(
+        ellipse at 50% 78%,
+        transparent 10%,
+        rgba(0,0,0,.18) 100%
+    );
+}
+
+.ambient-light {
+    position: fixed;
+    z-index: -2;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+
+    background: rgba(45,255,150,.10);
+    filter: blur(130px);
+
+    left: 50%;
+    top: 45%;
+    transform: translateX(-50%);
+
+    pointer-events: none;
+}
+
+.network-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+}
+
+.network-lines {
+    fill: none;
+    stroke: rgba(66,255,173,.13);
+    stroke-width: 1.35;
+    stroke-dasharray: 3 12;
+    animation: network-flow 28s linear infinite;
+}
+
+.circuit-traces {
+    fill: none;
+    stroke: rgba(66,255,173,.16);
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.circuit-traces path {
+    stroke-dasharray: 18 14;
+    animation: network-flow 24s linear infinite;
+}
+
+.network-nodes {
+    fill: #42ffad;
+    opacity: .55;
+}
+
+.network-node-ring {
+    fill: none;
+    stroke: rgba(66,255,173,.3);
+    stroke-width: 1;
+}
+
+.network-packet {
+    filter: drop-shadow(0 0 5px #42ffad);
+}
+
+@keyframes network-flow {
+    to {
+        stroke-dashoffset: -256;
+    }
+}
+
+/* ==============================
+   LOGO
+============================== */
+
+.site-logo {
+    position: fixed;
+    z-index: 15;
+
+    top: 20px;
+    left: 25px;
+
+    width: clamp(110px, 13vw, 165px);
+    height: auto;
+
+    object-fit: contain;
+
+    filter: drop-shadow(
+        0 0 9px rgba(90,255,190,.22)
+    );
+
+    pointer-events: none;
+}
+
+/* ==============================
+   HOME PAGE
+============================== */
+
+.main-page {
+    min-height: 100vh;
+    min-height: 100svh;
+
+    padding: 35px 20px 125px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-title {
+    margin: 0 0 25px;
+
+    color: #effff7;
+
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-size: clamp(40px, 6vw, 68px);
+    font-weight: 600;
+
+    line-height: 1.1;
+    letter-spacing: .02em;
+    text-align: center;
+
+    text-shadow: 0 0 15px rgba(90,255,190,.3);
+}
+
+.content-wrapper {
+    width: 100%;
+    max-width: 630px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    margin-inline: auto;
+}
+
+/* ==============================
+   MENU CARDS
+============================== */
+
+.menu-card {
+    width: 100%;
+    min-height: 90px;
+    color: inherit;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    gap: 17px;
+
+    padding: 18px 22px;
+
+    background: linear-gradient(
+        110deg,
+        rgba(20,27,32,.91),
+        rgba(11,17,22,.84)
+    );
+
+    border: 1px solid rgba(220,235,244,.3);
+    border-radius: 11px;
+
+    backdrop-filter: blur(16px);
+
+    box-shadow:
+        0 8px 26px rgba(0,0,0,.24),
+        inset 0 0 20px rgba(220,235,244,.025);
+
+    cursor: pointer;
+
+    transition:
+        border-color .3s ease,
+        box-shadow .3s ease,
+        background .3s ease;
+}
+
+.menu-card:hover {
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 25px rgba(66,255,173,.13);
+}
+
+.menu-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid rgba(220,235,244,.4);
+    border-radius: 9px;
+
+    color: var(--green);
+    background: rgba(220,235,244,.07);
+}
+
+.menu-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.menu-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.menu-text h2 {
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.menu-text p {
+    color: #b9c8c0;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.menu-arrow {
+    color: var(--green);
+    font-size: 24px;
+}
+
+/* ==============================
+   SOCIAL MEDIA TILES
+   STATIONARY - NO SHAKING
+============================== */
+
+.social-section {
+    position: fixed;
+
+    left: 50%;
+    bottom: calc(25px + env(safe-area-inset-bottom, 0px));
+
+    width: min(480px, calc(100% - 36px));
+
+    z-index: 100;
+
+    /* Stable positioning */
+    transform: translateX(-50%);
+
+    opacity: 1;
+
+    pointer-events: none;
+}
+
+/* THREE COLUMN GRID */
+
+.social-arc {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 14px;
+    width: 100%;
+}
+
+/* COMMON TILE */
+
+.social-link {
+    position: relative;
+
+    width: 100%;
+    min-width: 0;
+    height: 78px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    text-decoration: none;
+
+    border-radius: 14px;
+
+    background: rgba(10,19,24,.9);
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.3),
+        inset 0 0 15px rgba(255,255,255,.025);
+
+    /* No animation or floating movement */
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease,
+        border-color .3s ease,
+        background .3s ease;
+
+    pointer-events: auto;
+}
+
+/* SOCIAL ICONS */
+
+.social-link svg {
+    width: 29px;
+    height: 29px;
+
+    display: block;
+    flex-shrink: 0;
+}
+
+/* SOCIAL LABELS */
+
+.social-link span {
+    font-family: 'Inter', sans-serif;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: .5px;
+}
+
+/* INSTAGRAM */
+
+.social-link.instagram {
+    color: #ff69b4;
+    border-color: rgba(255,105,180,.35);
+}
+
+.social-link.instagram:hover {
+    transform: translateY(-5px) scale(1.04);
+
+    border-color: #ff69b4;
+
+    background: rgba(255,70,150,.13);
+
+    box-shadow:
+        0 0 15px rgba(255,105,180,.3),
+        0 0 30px rgba(255,105,180,.15);
+}
+
+/* WHATSAPP */
+
+.social-link.whatsapp {
+    color: #25d366;
+    border-color: rgba(37,211,102,.35);
+}
+
+.social-link.whatsapp:hover {
+    transform: translateY(-5px) scale(1.04);
+
+    border-color: #25d366;
+
+    background: rgba(37,211,102,.13);
+
+    box-shadow:
+        0 0 15px rgba(37,211,102,.3),
+        0 0 30px rgba(37,211,102,.15);
+}
+
+/* LINKEDIN */
+
+.social-link.linkedin {
+    color: #38a8ff;
+    border-color: rgba(56,168,255,.35);
+}
+
+.social-link.linkedin:hover {
+    transform: translateY(-5px) scale(1.04);
+
+    border-color: #38a8ff;
+
+    background: rgba(56,168,255,.13);
+
+    box-shadow:
+        0 0 15px rgba(56,168,255,.3),
+        0 0 30px rgba(56,168,255,.15);
+}
+
+/* KEYBOARD ACCESSIBILITY */
+
+.social-link:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 4px;
+}
+
+/* ==============================
+   INNER PAGES
+============================== */
+
+.sub-page {
+    display: none;
+
+    min-height: 100vh;
+
+    padding: 30px 18px 55px;
+}
+
+.sub-page.active {
+    display: block;
+    animation: fadeIn .5s ease;
+}
+
+#homePage.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sub-container {
+    width: 100%;
+    max-width: 600px;
+
+    margin: 0 auto;
+}
+
+/* BACK BUTTON */
+
+.back-button {
+    border: 1px solid var(--green);
+
+    padding: 11px 17px;
+
+    color: var(--green);
+    background: rgba(15,25,23,.8);
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    margin-bottom: 30px;
+
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+/* HEADINGS */
+
+.sub-heading {
+    font-family: Orbitron, sans-serif;
+
+    font-size: clamp(22px,4vw,34px);
+
+    margin-bottom: 12px;
+}
+
+.sub-heading span {
+    color: var(--green);
+}
+
+.sub-description {
+    font-size: 13px;
+
+    color: #c4d2ca;
+
+    line-height: 1.8;
+
+    margin-bottom: 25px;
+}
+
+/* PANELS */
+
+.panel {
+    background: rgba(22,30,30,.88);
+
+    border: 1px solid rgba(66,255,173,.35);
+
+    padding: 23px;
+
+    border-radius: 11px;
+
+    backdrop-filter: blur(18px);
+
+    box-shadow: 0 0 22px rgba(66,255,173,.1);
+
+    margin-bottom: 20px;
+}
+
+.panel h3 {
+    font-family: Orbitron, sans-serif;
+
+    font-size: 12px;
+
+    color: var(--green);
+
+    letter-spacing: 1px;
+
+    margin-bottom: 20px;
+}
+
+/* ==============================
+   CAMERA SCANNER
+============================== */
+
+.camera-box {
+    width: 100%;
+
+    min-height: 270px;
+
+    position: relative;
+
+    border: 1px dashed var(--green);
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    display: grid;
+    place-items: center;
+
+    background: rgba(0,0,0,.65);
+}
+
+.camera-box video {
+    width: 100%;
+    max-height: 350px;
+
+    object-fit: cover;
+
+    display: none;
+}
+
+.camera-placeholder {
+    padding: 20px;
+    text-align: center;
+}
+
+.camera-placeholder svg {
+    width: 45px;
+    height: 45px;
+
+    color: var(--green);
+
+    margin-bottom: 15px;
+}
+
+.camera-placeholder h4 {
+    font-family: Orbitron, sans-serif;
+    font-size: 12px;
+
+    margin-bottom: 10px;
+}
+
+.camera-placeholder p {
+    color: #b6c7be;
+
+    font-size: 12px;
+
+    line-height: 1.8;
+}
+
+.scan-line {
+    display: none;
+
+    position: absolute;
+    z-index: 2;
+
+    left: 8%;
+
+    width: 84%;
+    height: 2px;
+
+    background: var(--green);
+
+    box-shadow: 0 0 15px 4px var(--green);
+
+    animation: scan 2s infinite alternate;
+
+    pointer-events: none;
+}
+
+.camera-box.scanning .scan-line {
+    display: block;
+}
+
+@keyframes scan {
+    from { top: 10%; }
+    to { top: 90%; }
+}
+
+/* ==============================
+   BUTTONS
+============================== */
+
+.button-group {
+    display: flex;
+    gap: 10px;
+
+    margin-top: 17px;
+}
+
+.btn {
+    border: 1px solid var(--green);
+
+    background: var(--green);
+    color: #00140a;
+
+    padding: 13px 20px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.btn:hover {
+    background: transparent;
+    color: var(--green);
+
+    box-shadow: 0 0 15px rgba(66,255,173,.3);
+}
+
+.btn.secondary {
+    color: var(--green);
+    background: transparent;
+}
+
+/* ==============================
+   FORM INPUTS
+============================== */
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    display: block;
+
+    font-size: 11px;
+    letter-spacing: 1px;
+
+    color: var(--green);
+
+    margin-bottom: 9px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+
+    padding: 13px;
+
+    background: rgba(0,0,0,.55);
+
+    color: white;
+
+    border: 1px solid rgba(66,255,173,.35);
+
+    outline: none;
+
+    border-radius: 5px;
+
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+}
+
+.form-group textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--green);
+}
+
+.form-group input[type="date"] {
+    color-scheme: dark;
+}
+
+/* ==============================
+   SCAN RESULTS
+============================== */
+
+.result-item {
+    padding: 14px 0;
+
+    border-bottom: 1px solid rgba(66,255,173,.2);
+}
+
+.result-item:last-child {
+    border: none;
+}
+
+.result-item label {
+    display: block;
+
+    color: #8ba99a;
+
+    font-size: 10px;
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+.result-item p {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.result-message {
+    padding: 13px;
+
+    margin-top: 15px;
+
+    background: rgba(66,255,173,.08);
+
+    border: 1px solid rgba(66,255,173,.25);
+
+    color: var(--green);
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* ==============================
+   VENUE DETAILS
+============================== */
+
+.venue-item {
+    padding: 20px;
+
+    border: 1px solid rgba(66,255,173,.3);
+
+    background: rgba(5,22,18,.7);
+
+    border-radius: 8px;
+
+    margin-bottom: 15px;
+}
+
+.venue-item svg {
+    color: var(--green);
+    margin-bottom: 12px;
+}
+
+.venue-item h4 {
+    font-family: Orbitron, sans-serif;
+
+    color: var(--green);
+
+    font-size: 12px;
+
+    margin-bottom: 10px;
+}
+
+.venue-item p {
+    font-size: 13px;
+
+    color: #e0eae3;
+
+    line-height: 1.8;
+}
+
+.map-link {
+    display: block;
+
+    text-align: center;
+
+    padding: 14px;
+
+    color: var(--green);
+
+    border: 1px solid var(--green);
+
+    text-decoration: none;
+
+    font-size: 11px;
+    letter-spacing: 2px;
+
+    margin-top: 18px;
+
+    border-radius: 5px;
+
+    transition: .3s;
+}
+
+.map-link:hover {
+    background: rgba(66,255,173,.1);
+}
+
+/* ==============================
+   TABLET
+============================== */
+
+@media (min-width: 600px) and (max-width: 1024px) {
+
+    .content-wrapper {
+        max-width: 520px;
+    }
+
+    .menu-card {
+        min-height: 88px;
+    }
+
+    .site-logo {
+        width: clamp(92px, 13vw, 124px);
+    }
+
+    .social-section {
+        width: min(440px, calc(100% - 40px));
+        bottom: 20px;
+    }
+
+    .social-arc {
+        gap: 12px;
+    }
+
+}
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 599px) {
+
+    .background {
+        background-position: 54% bottom;
+    }
+
+    .main-page {
+        padding: 30px 16px 115px;
+    }
+
+    .site-logo {
+        top: 40px;
+        left: 50%;
+
+        width: min(58vw, 190px);
+
+        transform: translateX(-50%);
+    }
+
+    .brand-title {
+        font-size: clamp(40px, 11vw, 52px);
+
+        margin-bottom: 22px;
+    }
+
+    .content-wrapper {
+        gap: 12px;
+        transform: translateY(28px);
+    }
+
+    .menu-card {
+        min-height: 78px;
+
+        padding: 13px;
+
+        gap: 12px;
+    }
+
+    .menu-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .menu-text h2 {
+        font-size: 13px;
+    }
+
+    .menu-text p {
+        font-size: 12px;
+    }
+
+    /* SOCIAL TILES */
+
+    .social-section {
+        width: calc(100% - 28px);
+
+        bottom: calc(50px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .social-arc {
+        gap: 8px;
+    }
+
+    .social-link {
+        height: 65px;
+        border-radius: 11px;
+        gap: 5px;
+    }
+
+    .social-link svg {
+        width: 23px;
+        height: 23px;
+    }
+
+    .social-link span {
+        font-size: 10px;
+    }
+
+    /* INNER PAGES */
+
+    .sub-page {
+        padding: 20px 15px 35px;
+    }
+
+    .panel {
+        padding: 17px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .button-group button {
+        width: 100%;
+    }
+
+}
+
+/* SMALL MOBILE */
+
+@media (max-width: 350px) {
+
+    .social-arc {
+        gap: 6px;
+    }
+
+    .social-link {
+        height: 60px;
+    }
+
+    .social-link svg {
+        width: 21px;
+        height: 21px;
+    }
+
+    .social-link span {
+        font-size: 9px;
+    }
+
+}
+
+/* SHORT MOBILE SCREENS */
+
+@media (max-width: 599px) and (max-height: 700px) {
+
+    .main-page {
+        justify-content: flex-start;
+        padding-top: 145px;
+    }
+
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+
+    .network-lines {
+        animation-duration: 36s !important;
+        animation-iteration-count: infinite !important;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+
+<div class="background"></div>
+<svg class="network-overlay" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g class="network-lines">
+        <path d="M70 145 250 235 420 150 610 245 790 155 980 245 1160 145 1370 230" />
+        <path d="M70 145 120 390 300 475 250 235" />
+        <path d="M250 235 300 475 490 370 610 245" />
+        <path d="M420 150 490 370 680 470 790 155" />
+        <path d="M610 245 680 470 900 390 980 245" />
+        <path d="M790 155 900 390 1100 475 1160 145" />
+        <path d="M980 245 1100 475 1320 390 1370 230" />
+        <path d="M120 390 180 665 390 735 490 370" />
+        <path d="M300 475 390 735 610 630 680 470" />
+        <path d="M680 470 610 630 830 755 900 390" />
+        <path d="M900 390 830 755 1060 665 1100 475" />
+        <path d="M1100 475 1060 665 1280 735 1320 390" />
+        <path d="M390 735 610 830 830 755 1060 830 1280 735" />
+    </g>
+    <g class="circuit-traces">
+        <path d="M0 270 H110 V330 H205 V370" />
+        <path d="M0 560 H85 V500 H185 V465" />
+        <path d="M1440 285 H1335 V345 H1240 V390" />
+        <path d="M1440 590 H1350 V535 H1255 V495" />
+        <path d="M445 0 V75 H505 V125 H555" />
+        <path d="M1000 0 V78 H940 V130 H890" />
+        <path d="M470 900 V825 H535 V780 H590" />
+        <path d="M980 900 V825 H915 V780 H860" />
+    </g>
+    <g class="network-nodes">
+        <circle class="network-node-ring" cx="70" cy="145" r="6" /><circle cx="70" cy="145" r="2" />
+        <circle class="network-node-ring" cx="250" cy="235" r="6" /><circle cx="250" cy="235" r="2" />
+        <circle class="network-node-ring" cx="420" cy="150" r="6" /><circle cx="420" cy="150" r="2" />
+        <circle class="network-node-ring" cx="610" cy="245" r="6" /><circle cx="610" cy="245" r="2" />
+        <circle class="network-node-ring" cx="790" cy="155" r="6" /><circle cx="790" cy="155" r="2" />
+        <circle class="network-node-ring" cx="980" cy="245" r="6" /><circle cx="980" cy="245" r="2" />
+        <circle class="network-node-ring" cx="1160" cy="145" r="6" /><circle cx="1160" cy="145" r="2" />
+        <circle class="network-node-ring" cx="1370" cy="230" r="6" /><circle cx="1370" cy="230" r="2" />
+        <circle class="network-node-ring" cx="120" cy="390" r="6" /><circle cx="120" cy="390" r="2" />
+        <circle class="network-node-ring" cx="300" cy="475" r="6" /><circle cx="300" cy="475" r="2" />
+        <circle class="network-node-ring" cx="490" cy="370" r="6" /><circle cx="490" cy="370" r="2" />
+        <circle class="network-node-ring" cx="680" cy="470" r="6" /><circle cx="680" cy="470" r="2" />
+        <circle class="network-node-ring" cx="900" cy="390" r="6" /><circle cx="900" cy="390" r="2" />
+        <circle class="network-node-ring" cx="1100" cy="475" r="6" /><circle cx="1100" cy="475" r="2" />
+        <circle class="network-node-ring" cx="1320" cy="390" r="6" /><circle cx="1320" cy="390" r="2" />
+        <circle class="network-node-ring" cx="180" cy="665" r="6" /><circle cx="180" cy="665" r="2" />
+        <circle class="network-node-ring" cx="390" cy="735" r="6" /><circle cx="390" cy="735" r="2" />
+        <circle class="network-node-ring" cx="610" cy="630" r="6" /><circle cx="610" cy="630" r="2" />
+        <circle class="network-node-ring" cx="830" cy="755" r="6" /><circle cx="830" cy="755" r="2" />
+        <circle class="network-node-ring" cx="1060" cy="665" r="6" /><circle cx="1060" cy="665" r="2" />
+        <circle class="network-node-ring" cx="1280" cy="735" r="6" /><circle cx="1280" cy="735" r="2" />
+        <circle class="network-node-ring" cx="610" cy="830" r="6" /><circle cx="610" cy="830" r="2" />
+        <circle class="network-node-ring" cx="1060" cy="830" r="6" /><circle cx="1060" cy="830" r="2" />
+    </g>
+    <g class="network-signals" fill="#baffdf">
+        <circle class="network-packet" r="3.5" opacity=".95">
+            <animateMotion dur="18s" repeatCount="indefinite" path="M70 145 250 235 420 150 610 245 790 155 980 245 1160 145 1370 230" />
+        </circle>
+        <circle class="network-packet" r="3" opacity=".9">
+            <animateMotion dur="22s" repeatCount="indefinite" path="M120 390 300 475 490 370 680 470 900 390 1100 475 1320 390" />
+        </circle>
+        <circle class="network-packet" r="3" opacity=".9">
+            <animateMotion dur="26s" repeatCount="indefinite" path="M180 665 390 735 610 630 830 755 1060 665 1280 735" />
+        </circle>
+        <circle class="network-packet" r="3" opacity=".85">
+            <animateMotion dur="15s" repeatCount="indefinite" path="M0 270 H110 V330 H205 V370" />
+        </circle>
+        <circle class="network-packet" r="3" opacity=".85">
+            <animateMotion dur="17s" repeatCount="indefinite" path="M1440 590 H1350 V535 H1255 V495" />
+        </circle>
+    </g>
+</svg>
+<div class="ambient-light"></div>
+
+<!-- LOGO -->
+
+<img
+    class="site-logo"
+    src="./event-logo.png"
+    alt="KonnectX Logo"
+>
+
+<!-- ==============================
+     HOME PAGE
+============================== -->
+
+<main class="main-page" id="homePage">
+
+    <h1 class="brand-title">KonnectX</h1>
+
+    <section class="content-wrapper">
+
+        <!-- APPLICATION SCANNER -->
+
+        <article
+            class="menu-card"
+            onclick="window.location.href='../home.html'"
+        >
+
+            <div class="menu-icon">
+                <i data-lucide="globe"></i>
+            </div>
+
+            <div class="menu-text">
+
+                <h2>Our Website KonnectX</h2>
+
+                <p>To check click here!</p>
+
+            </div>
+
+            <span class="menu-arrow">›</span>
+
+        </article>
+
+        <!-- REGISTRATION -->
+
+        <article
+            class="menu-card"
+            onclick="window.location.href='../KonnectXBussinessRegestration/index.html'"
+        >
+
+            <div class="menu-icon">
+                <i data-lucide="clipboard-list"></i>
+            </div>
+
+            <div class="menu-text">
+
+                <h2>REGISTRATION</h2>
+
+                <p>
+                    Access participant registration and entry details.
+                </p>
+
+            </div>
+
+            <span class="menu-arrow">›</span>
+
+        </article>
+
+        <!-- VENUE -->
+
+        <a
+            class="menu-card"
+            href="venue.html"
+            aria-label="View venue details for AAA Cinemas at Inorbit Mall Visakhapatnam"
+        >
+
+            <div class="menu-icon">
+                <i data-lucide="map-pin"></i>
+            </div>
+
+            <div class="menu-text">
+
+                <h2>VENUE DETAILS</h2>
+
+                <p>
+                    Discover event location, schedule and contact details.
+                </p>
+
+            </div>
+
+            <span class="menu-arrow">›</span>
+
+        </a>
+
+    </section>
+
+</main>
+
+<!-- ==============================
+     SOCIAL MEDIA
+============================== -->
+
+<section class="social-section" aria-label="Social media accounts">
+
+    <div class="social-arc">
+
+        <!-- INSTAGRAM -->
+
+        <a
+            class="social-link instagram"
+            href="https://www.instagram.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+        >
+
+            <svg viewBox="0 0 24 24" fill="none">
+
+                <rect
+                    x="3"
+                    y="3"
+                    width="18"
+                    height="18"
+                    rx="5"
+                    stroke="currentColor"
+                    stroke-width="2"
+                />
+
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="4"
+                    stroke="currentColor"
+                    stroke-width="2"
+                />
+
+                <circle
+                    cx="17.5"
+                    cy="6.5"
+                    r="1"
+                    fill="currentColor"
+                />
+
+            </svg>
+
+            <span>Instagram</span>
+
+        </a>
+
+        <!-- WHATSAPP -->
+
+        <a
+            class="social-link whatsapp"
+            href="https://wa.me/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+        >
+
+            <svg viewBox="0 0 24 24" fill="none">
+
+                <path
+                    d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.5 0 .2 5.3.2 11.9c0 2.1.5 4.1 1.6 5.9L.1 24l6.3-1.7a11.9 11.9 0 0 0 5.7 1.5h.1c6.5 0 11.8-5.3 11.8-11.9a11.8 11.8 0 0 0-3.5-8.4Z"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linejoin="round"
+                />
+
+                <path
+                    d="M8.5 7.5c-.3-.5-.6-.5-.9-.5h-.7c-.3 0-.7.1-1 .5-.3.4-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.3 2.4 3.8 5.9 5.2 2.9 1.2 3.5.9 4.1.8.6-.1 1.9-.8 2.2-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.7-.5-.4-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.3-.8.1-.4-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.4 0-.6.2-.8l.5-.6c.2-.2.2-.4.4-.6.1-.3 0-.5 0-.7-.1-.2-.7-1.8-1-2.5Z"
+                    fill="currentColor"
+                />
+
+            </svg>
+
+            <span>WhatsApp</span>
+
+        </a>
+
+        <!-- LINKEDIN -->
+
+        <a
+            class="social-link linkedin"
+            href="https://www.linkedin.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+        >
+
+            <svg viewBox="0 0 24 24" fill="currentColor">
+
+                <path
+                    d="M5.2 8.6H2V22h3.2V8.6ZM3.6 2a1.86 1.86 0 1 0 0 3.72A1.86 1.86 0 0 0 3.6 2ZM22 14.3c0-4.03-2.15-5.9-5.02-5.9a4.34 4.34 0 0 0-3.91 2.15V8.6H9.85V22h3.22v-6.63c0-1.75.33-3.45 2.5-3.45 2.14 0 2.17 2 2.17 3.56V22H22v-7.7Z"
+                />
+
+            </svg>
+
+            <span>LinkedIn</span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ==============================
+     JAVASCRIPT
+============================== -->
+
+<script>
+
+/* ICON INITIALIZATION */
+
+lucide.createIcons();
+
+
+/* NAVIGATION */
+
+function navigate(pageId) {
+
+    stopAllScanners();
+
+    document.getElementById("homePage")
+        .classList.add("hidden");
+
+    document.querySelectorAll(".sub-page")
+        .forEach(page => {
+            page.classList.remove("active");
+        });
+
+    document.getElementById(pageId)
+        .classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    lucide.createIcons();
+
+}
+
+
+function goBack() {
+
+    stopAllScanners();
+
+    document.querySelectorAll(".sub-page")
+        .forEach(page => {
+            page.classList.remove("active");
+        });
+
+    document.getElementById("homePage")
+        .classList.remove("hidden");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* ==============================
+   QR CAMERA SCANNER
+============================== */
+
+const streams = {};
+const scanning = {};
+
+let detector = null;
+
+if ("BarcodeDetector" in window) {
+
+    try {
+
+        detector = new BarcodeDetector({
+            formats: ["qr_code"]
+        });
+
+    } catch(error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+async function startScanner(type) {
+
+    const video = document.getElementById(type + "Video");
+
+    const camera = document.getElementById(type + "Camera");
+
+    const placeholder = document.getElementById(type + "Placeholder");
+
+    const message = document.getElementById(type + "Message");
+
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+
+        message.textContent =
+            "Camera requires HTTPS or localhost.";
+
+        return;
+
+    }
+
+
+    if (!detector) {
+
+        message.textContent =
+            "Automatic QR scanning is not supported in this browser. Please use manual verification.";
+
+        return;
+
+    }
+
+
+    stopScanner(type);
+
+
+    try {
+
+        const stream =
+            await navigator.mediaDevices.getUserMedia({
+
+                video: {
+                    facingMode: {
+                        ideal: "environment"
+                    }
+                },
+
+                audio: false
+
+            });
+
+
+        streams[type] = stream;
+
+        video.srcObject = stream;
+
+        video.style.display = "block";
+
+        placeholder.style.display = "none";
+
+        camera.classList.add("scanning");
+
+        await video.play();
+
+        scanning[type] = true;
+
+        message.textContent =
+            "Camera active. Searching for QR code...";
+
+        scanLoop(type);
+
+
+    } catch(error) {
+
+        message.textContent =
+            "Camera permission denied or camera is unavailable.";
+
+        console.error(error);
+
+    }
+
+}
+
+
+async function scanLoop(type) {
+
+    if (!scanning[type]) return;
+
+    const video =
+        document.getElementById(type + "Video");
+
+
+    if (video.readyState >= 2) {
+
+        try {
+
+            const codes = await detector.detect(video);
+
+            if (codes.length > 0 && codes[0].rawValue) {
+
+                displayDetails(
+                    type,
+                    codes[0].rawValue
+                );
+
+                stopScanner(type);
+
+                return;
+
+            }
+
+        } catch(error) {
+
+            console.log(error);
+
+        }
+
+    }
+
+
+    if (scanning[type]) {
+
+        requestAnimationFrame(() => scanLoop(type));
+
+    }
+
+}
+
+
+function stopScanner(type) {
+
+    scanning[type] = false;
+
+
+    if (streams[type]) {
+
+        streams[type]
+            .getTracks()
+            .forEach(track => track.stop());
+
+        delete streams[type];
+
+    }
+
+
+    const video =
+        document.getElementById(type + "Video");
+
+
+    if (video) {
+
+        video.pause();
+
+        video.srcObject = null;
+
+        video.style.display = "none";
+
+    }
+
+
+    const placeholder =
+        document.getElementById(type + "Placeholder");
+
+
+    if (placeholder) {
+
+        placeholder.style.display = "block";
+
+    }
+
+
+    const camera =
+        document.getElementById(type + "Camera");
+
+
+    if (camera) {
+
+        camera.classList.remove("scanning");
+
+    }
+
+}
+
+
+function stopAllScanners() {
+
+    stopScanner("application");
+
+    stopScanner("registration");
+
+}
+
+
+/* ==============================
+   QR DETAILS
+============================== */
+
+function displayDetails(type, value) {
+
+    let data;
+
+
+    try {
+
+        data = JSON.parse(value);
+
+    } catch(error) {
+
+        data = {
+            id: value
+        };
+
+    }
+
+
+    const id =
+        data.id ||
+        data.applicationId ||
+        data.registrationId ||
+        data.code ||
+        value;
+
+
+    document.getElementById(type + "Id")
+        .textContent = id;
+
+
+    document.getElementById(type + "Name")
+        .textContent =
+            data.name ||
+            data.fullName ||
+            "Not available";
+
+
+    document.getElementById(type + "Email")
+        .textContent =
+            data.email ||
+            "Not available";
+
+
+    document.getElementById(type + "Status")
+        .textContent =
+            "QR DETECTED - VERIFICATION REQUIRED";
+
+
+    document.getElementById(type + "Message")
+        .textContent =
+            "QR code successfully detected. Connect your database or backend to verify the actual application or registration status.";
+
+}
+
+
+/* ==============================
+   MANUAL VERIFICATION
+============================== */
+
+function manualVerify(type) {
+
+    const input =
+        document.getElementById(type + "Manual");
+
+    const value = input.value.trim();
+
+
+    if (!value) {
+
+        alert("Please enter an ID.");
+
+        return;
+
+    }
+
+
+    displayDetails(type, value);
+
+    input.value = "";
+
+}
+
+
+/* ==============================
+   VENUE INFORMATION
+============================== */
+
+const venueFields = [
+
+    "venueName",
+
+    "venueAddress",
+
+    "venueDate",
+
+    "venueTime",
+
+    "venueContact"
+
+];
+
+
+function saveVenue() {
+
+    const data = {};
+
+
+    venueFields.forEach(field => {
+
+        data[field] =
+            document.getElementById(field).textContent;
+
+    });
+
+
+    localStorage.setItem(
+        "eventVenueDetails",
+        JSON.stringify(data)
+    );
+
+}
+
+
+function loadVenue() {
+
+    const saved =
+        localStorage.getItem("eventVenueDetails");
+
+
+    if (!saved) return;
+
+
+    try {
+
+        const data = JSON.parse(saved);
+
+
+        venueFields.forEach(field => {
+
+            if (data[field]) {
+
+                document.getElementById(field)
+                    .textContent = data[field];
+
+            }
+
+        });
+
+    } catch(error) {
+
+        console.error(
+            "Unable to load venue details:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==============================
+   UPDATE VENUE FORM
+============================== */
+
+document
+    .getElementById("venueForm")
+    .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+
+        const values = {
+
+            venueName:
+                document.getElementById("editVenueName")
+                    .value.trim(),
+
+            venueAddress:
+                document.getElementById("editVenueAddress")
+                    .value.trim(),
+
+            venueDate:
+                document.getElementById("editVenueDate")
+                    .value,
+
+            venueTime:
+                document.getElementById("editVenueTime")
+                    .value.trim(),
+
+            venueContact:
+                document.getElementById("editVenueContact")
+                    .value.trim()
+
+        };
+
+
+        Object.keys(values).forEach(field => {
+
+            if (values[field]) {
+
+                document.getElementById(field)
+                    .textContent = values[field];
+
+            }
+
+        });
+
+
+        saveVenue();
+
+        alert("Venue information saved successfully!");
+
+    });
+
+
+/* INITIALIZE */
+
+loadVenue();
+
+</script>
+
+</body>
+</html>
