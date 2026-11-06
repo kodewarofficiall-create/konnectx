@@ -28,7 +28,7 @@ const enquiryForm=document.getElementById('enquiryForm');if(enquiryForm)enquiryF
 if(enquiryForm){const subcategory=new URLSearchParams(location.search).get('subcategory');const discussion=enquiryForm.elements.namedItem('message');if(subcategory&&discussion)discussion.value=`I’m interested in ${subcategory}. Please contact me with more information.`}
 // (Mobile navigation is handled in extras.js)
 document.querySelectorAll('.site-header .header-actions .button-small').forEach(link=>{
- if(link.textContent.trim().startsWith('Join KonnectX'))link.href='KonnectXBussinessRegestration/index.html?open=1';
+ if(link.textContent.trim().startsWith('Join konnectkx'))link.href='KonnectXBussinessRegestration/index.html?open=1';
 });
 // Gentle entrance animations respect reduced-motion settings.
 if('IntersectionObserver'in window&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.08});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))}else document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));

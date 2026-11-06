@@ -3,12 +3,12 @@ Beginner-Friendly Step-by-Step Setup Guide
 Open your browser and navigate to https://sheets.google.com
 .
 Click Blank spreadsheet to create a new sheet.
-Name your spreadsheet at the top left (e.g., KonnectX Registrations).
+Name your spreadsheet at the top left (e.g., konnectkx Registrations).
 
 2. Open Google Apps Script
 In the Google Sheets top menu bar, click on Extensions → Apps Script.
 A new browser tab will open with the Apps Script code editor.
-Rename the Apps Script project at the top left to KonnectX Backend.
+Rename the Apps Script project at the top left to konnectkx Backend.
 
 3. Add the Code.gs Code
 In the Apps Script code editor, delete any default code inside Code.gs (myFunction() { ... }).
@@ -23,7 +23,7 @@ Click the Run button (play icon).
 Google will prompt you with an "Authorization Required" window:
 Click Review permissions.
 Select your Google account.
-If you see Google hasn't verified this app, click Advanced at the bottom left, then click Go to KonnectX Backend (unsafe).
+If you see Google hasn't verified this app, click Advanced at the bottom left, then click Go to konnectkx Backend (unsafe).
 Click Allow.
 Once execution finishes, check the Execution Log at the bottom. You will see:
 text
