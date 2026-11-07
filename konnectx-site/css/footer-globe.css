@@ -1,0 +1,26 @@
+/* =====================================================================
+   FOOTER GLOBE (all 3 pages): sits in the same bottom position as before, but now runs EDGE TO EDGE.
+   The full-width image is clipped to a short strip, so you see the curved top of the planet (the horizon arc
+   rising in the middle and curving down towards both screen edges). Black sky of the image is transparent.
+   ===================================================================== */
+:root{
+  --fr:calc(clamp(300px,44vw,560px)/4);                 /* ORIGINAL footer space reserved for page content (unchanged layout) */
+  --fh:min(calc(100vw/2.746),clamp(150px,19vh,210px));  /* visible height of the globe strip (taller = more of the planet shows) */
+  --fg-op:1;                                            /* opacity: lower = fainter */
+}
+.footer-globe{position:fixed;left:0;right:0;bottom:0;width:100vw;height:var(--fh);overflow:hidden;z-index:1;pointer-events:none;
+  opacity:0;transition:opacity 1.8s ease .6s;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 16%,#000 100%);mask-image:linear-gradient(180deg,transparent 0,#000 16%,#000 100%)}
+body.go .footer-globe{opacity:var(--fg-op)}
+.footer-globe img{display:block;width:100%;height:auto;margin-top:-16px;image-rendering:auto;user-select:none;-webkit-user-drag:none}
+body.launch-on .footer-globe{--fg-op:.9}
+
+/* PAGE 2: the two people stand ABOVE the globe (never over it): the event page keeps the footer height free at the bottom */
+#event{padding-bottom:calc(var(--fr) + 8px)}
+#event .stage{width:min(96vw,1100px,calc((100vh - 310px - var(--fr) + 60px)*1.9))}
+@media (max-width:600px){#event .stage{width:125vw}}
+/* PAGE 3: phones sit in front of the globe; captions stay readable */
+#launch{padding-bottom:calc(var(--fr) + 4px)}
+#launch .devices{--pw:min(250px,calc((100vh - 335px - var(--fr)*.55)*.46))}
+@media (max-width:700px){#launch .devices{--pw:min(44vw,calc((100vh - 340px - var(--fr)*.55)*.46))}}
+.dev figcaption{text-shadow:0 0 8px #000,0 0 14px #000}

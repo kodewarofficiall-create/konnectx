@@ -1,0 +1,265 @@
+/* =====================================================================
+   PAGE 3 : "WE ARE LAUNCHING SOON" + iPhone (App Store) + Android (Play Store)
+   ===================================================================== */
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:40;pointer-events:none;display:block}
+
+.l-stack{gap:clamp(8px,1.6vh,16px);max-width:1100px}
+.l-eyebrow{font-family:'Montserrat',sans-serif;font-weight:700;font-size:clamp(13px,1.7vw,22px);letter-spacing:.5em;padding-left:.5em;
+  color:var(--green);text-shadow:0 0 12px rgba(31,255,74,.7);opacity:0}
+body.launch-on .l-eyebrow{animation:fade .8s .1s forwards}
+
+/* neon gold statement (same gold as SUCCESS, brighter glow) */
+.l-title{display:flex;flex-wrap:wrap;justify-content:center;column-gap:.32em;row-gap:.05em;
+  font-family:'Montserrat',sans-serif;font-weight:800;text-transform:uppercase;line-height:1.08;
+  font-size:clamp(21px,3.5vw,50px);letter-spacing:.07em}
+.l-title .w{display:inline-block;opacity:0;transform:translateY(28px) scale(.85);
+  background:linear-gradient(100deg,#c8960f 0%,#ffd86b 28%,#fff3b0 45%,#ffd86b 62%,#e0a800 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;padding:0 .04em}
+body.launch-on .l-title .w{animation:wordIn .7s var(--ease) forwards}
+body.launch-on .l-title .w:nth-child(1){animation-delay:.5s}
+body.launch-on .l-title .w:nth-child(2){animation-delay:.8s}
+body.launch-on .l-title .w:nth-child(3){animation-delay:1.1s}
+@keyframes wordIn{to{opacity:1;transform:none}}
+/* light, steady glow (same strength as SUCCESS on page 2). It is switched on only after the words have landed, so nothing heavy runs during the entrance. */
+body.launch-on .l-title{animation:titleGlow .01s 1.9s forwards}
+@keyframes titleGlow{to{filter:drop-shadow(0 0 6px rgba(255,200,60,.45))}}
+
+.l-line{width:min(70vw,460px);opacity:1}
+#launch .l-line{transform:scaleX(0)}
+body.launch-on #launch .l-line{animation:line .8s 1.7s var(--ease) forwards}
+.l-sub{font-weight:400;font-size:clamp(11px,1.35vw,17px);letter-spacing:.08em;color:#cfd8dc;opacity:0;padding:0 6px}
+.l-sub b{color:#ffd86b;font-weight:600}
+body.launch-on .l-sub{animation:fade .8s 2s forwards}
+
+/* ---------- devices ---------- */
+.devices{display:flex;justify-content:center;align-items:flex-start;gap:clamp(14px,5vw,64px);margin-top:clamp(4px,1.4vh,14px);
+  --pw:min(250px,calc((100vh - 335px)*.46));}
+@media (max-width:700px){.devices{--pw:min(44vw,calc((100vh - 340px)*.46))}}
+.dev{margin:0;display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;transform:translateY(46px)}
+body.launch-on .dev{animation:rise .9s 2.1s var(--ease) forwards}
+body.launch-on .dev.and{animation-delay:2.5s}
+.dev figcaption{font-family:'Montserrat',sans-serif;font-weight:700;font-size:clamp(8px,1vw,12px);letter-spacing:.3em;padding-left:.3em;
+  text-transform:uppercase;color:#cfd8dc;text-shadow:0 0 10px rgba(31,255,74,.45)}
+.dev figcaption b{color:var(--green)}
+
+.phone{width:max(var(--pw),112px);aspect-ratio:9/19;container-type:inline-size;position:relative;
+}
+.dev.ios .phone{animation:float 7s 3s ease-in-out infinite}
+.dev.and .phone{animation:float 7s 4.2s ease-in-out infinite}
+.bezel{position:absolute;inset:0;border-radius:13cqw;padding:2.4cqw;
+  background:linear-gradient(145deg,#4a5358,#14181a 35%,#0a0c0d 65%,#3b4347);
+  box-shadow:inset 0 0 0 .5cqw #5a6368,0 0 0 .4cqw rgba(31,255,74,.35),0 0 20px rgba(31,255,74,.25),0 12px 28px rgba(0,0,0,.6)}
+.screen{position:relative;width:100%;height:100%;border-radius:10.8cqw;overflow:hidden;background:#000;isolation:isolate}
+.island{position:absolute;z-index:30;top:3.2cqw;left:50%;width:27cqw;height:7.4cqw;border-radius:6cqw;background:#000;transform:translateX(-50%)}
+.hole{position:absolute;z-index:30;top:4cqw;left:50%;width:4.4cqw;height:4.4cqw;border-radius:50%;background:#000;transform:translateX(-50%);
+  box-shadow:0 0 0 .6cqw #15191b}
+.l{position:absolute;inset:0;font-family:'Poppins','Montserrat',sans-serif}
+.sbar{position:absolute;z-index:25;top:3.6cqw;left:7cqw;right:7cqw;display:flex;justify-content:space-between;
+  font-weight:700;font-size:3.6cqw;color:#fff;letter-spacing:.02em}
+.sbar i{width:9cqw;height:3cqw;border-radius:1cqw;border:.4cqw solid #fff;opacity:.9}
+.hbar{position:absolute;z-index:26;bottom:2.2cqw;left:50%;width:30cqw;height:1.1cqw;border-radius:1cqw;background:#fff;opacity:.85;transform:translateX(-50%)}
+
+/* generic app tiles */
+.t{display:block;width:100%;aspect-ratio:1;border-radius:22%;background:linear-gradient(145deg,var(--c1),var(--c2));
+  box-shadow:inset 0 0 0 .3cqw rgba(255,255,255,.18)}
+.kx{display:block;aspect-ratio:1;border-radius:22%;background:#000 url(../assets/logo-neon.jpg) center/128% auto no-repeat;
+  box-shadow:0 0 0 .3cqw rgba(31,255,74,.55),0 0 4cqw rgba(31,255,74,.35)}
+.grid{position:absolute;left:6cqw;right:6cqw;top:17cqw;display:grid;grid-template-columns:repeat(4,1fr);gap:6.2cqw 4.6cqw}
+.dock{position:absolute;left:4cqw;right:4cqw;bottom:6cqw;height:22cqw;border-radius:8cqw;padding:2.6cqw 3cqw;
+  background:rgba(255,255,255,.16);display:grid;grid-template-columns:repeat(4,1fr);gap:3.4cqw}
+.press{position:relative}
+.tap{position:absolute;left:50%;top:50%;width:15cqw;height:15cqw;margin:-7.5cqw 0 0 -7.5cqw;border-radius:50%;z-index:20;
+  background:radial-gradient(circle,rgba(255,255,255,.95),rgba(255,255,255,.35) 60%,transparent 72%);opacity:0;pointer-events:none}
+
+/* store glyphs (generic, not brand logos) */
+.bag{position:relative;display:block;width:100%;aspect-ratio:1;border-radius:22%;
+  background:linear-gradient(160deg,#35a7ff,#0a5cf0);box-shadow:inset 0 0 0 .3cqw rgba(255,255,255,.25)}
+.bag::before{content:"";position:absolute;left:27%;right:27%;top:37%;bottom:24%;border-radius:12%;background:#fff}
+.bag::after{content:"";position:absolute;left:36%;right:36%;top:22%;height:26%;border-radius:50% 50% 0 0;border:.7cqw solid #fff;border-bottom:0}
+.play{position:relative;display:block;width:100%;aspect-ratio:1;border-radius:26%;background:#fff;box-shadow:inset 0 0 0 .3cqw rgba(0,0,0,.08)}
+.play::before{content:"";position:absolute;left:29%;top:24%;width:46%;height:52%;
+  background:linear-gradient(135deg,#00c27a,#00a0ff 55%,#7a5cff);clip-path:polygon(0 0,100% 50%,0 100%);border-radius:4%}
+
+/* ---------- shared splash (the opened KonnectX app) ---------- */
+.splash{background:radial-gradient(ellipse at 50% 42%,#0b3a16 0%,#020a04 62%,#000 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3cqw;opacity:0}
+.splash img{width:82cqw;mix-blend-mode:screen;display:block;
+  -webkit-mask-image:radial-gradient(ellipse at center,#000 60%,transparent 98%);mask-image:radial-gradient(ellipse at center,#000 60%,transparent 98%)}
+.splash h4{font-family:'Montserrat',sans-serif;font-weight:800;font-size:9.5cqw;letter-spacing:-.01em;margin-top:-4cqw}
+.splash h4 .kxx{width:auto;height:.92em;display:inline-block;mix-blend-mode:normal;-webkit-mask-image:none;mask-image:none;vertical-align:-.092em}
+.splash p{font-size:3.3cqw;color:#cfd8dc;letter-spacing:.06em}
+.splash .bar{width:34cqw;height:1.1cqw;border-radius:2cqw;background:rgba(255,255,255,.15);overflow:hidden;margin-top:3cqw}
+.splash .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),#ffd86b)}
+
+/* =========================  iPHONE  ========================= */
+.ios .home{background:radial-gradient(ellipse at 30% 20%,#0f6a2a 0%,#06241a 45%,#02070a 100%)}
+.ios .store{background:#000;opacity:0;transform:scale(.25);transform-origin:20% 90%}
+.ios .app{opacity:0}
+.store .top{position:absolute;left:5cqw;right:5cqw;top:15cqw;display:flex;justify-content:space-between;align-items:center}
+.store .top h5{font-size:7.6cqw;font-weight:700;color:#fff}
+.store .top i{width:8.4cqw;height:8.4cqw;border-radius:50%;background:linear-gradient(145deg,#6a7a80,#2a3438)}
+.store .sec{position:absolute;left:5cqw;right:5cqw;top:30cqw;font-size:3.1cqw;font-weight:600;color:#0a84ff;letter-spacing:.04em}
+.listing{position:absolute;left:5cqw;right:5cqw;top:37cqw;display:grid;grid-template-columns:23cqw 1fr;column-gap:4cqw;align-items:center}
+.listing .kx{width:23cqw}
+.listing h6{font-size:5.2cqw;font-weight:700;color:#fff;line-height:1.15}
+.listing p{font-size:3cqw;color:#8e9aa0;margin-top:.6cqw;line-height:1.3}
+.btnrow{position:absolute;left:5cqw;right:5cqw;top:64cqw;height:9.6cqw;display:flex;justify-content:space-between;align-items:center}
+.btnrow small{font-size:2.8cqw;color:#8e9aa0;line-height:1.35}
+.btnrow small b{color:#ffd86b;font-size:3.2cqw}
+.bslot{position:relative;width:20cqw;height:9cqw}
+.bslot>*:not(.tap){position:absolute;inset:0;display:grid;place-items:center;border-radius:5cqw;font-weight:700;font-size:3.6cqw;letter-spacing:.04em}
+.b-get,.b-open{background:#0a84ff;color:#fff}
+.b-prog{opacity:0}
+.b-prog::before{content:"";width:8cqw;height:8cqw;border-radius:50%;border:1cqw solid rgba(255,255,255,.2);border-top-color:#0a84ff;animation:spin360 .9s linear infinite}
+.b-prog::after{content:"";position:absolute;width:2.6cqw;height:2.6cqw;border-radius:.6cqw;background:#0a84ff}
+.b-open{opacity:0}
+@keyframes spin360{to{transform:rotate(360deg)}}
+.shots{position:absolute;left:5cqw;right:0;top:80cqw;display:flex;gap:3cqw}
+.shots i{flex:0 0 38cqw;height:70cqw;border-radius:5cqw;border:.4cqw solid #1d2a22;
+  background:radial-gradient(ellipse at 50% 38%,#0c4a1e,#030d06 70%) }
+.shots i:nth-child(2){background:radial-gradient(ellipse at 50% 60%,#4a3a08,#0a0802 70%)}
+.tabs{position:absolute;left:0;right:0;bottom:0;height:17cqw;background:rgba(18,22,24,.96);border-top:.3cqw solid #263034;display:flex;justify-content:space-around;align-items:center;padding-bottom:3cqw}
+.tabs i{width:6cqw;height:6cqw;border-radius:1.6cqw;background:#56626a}.tabs i:nth-child(4){background:#0a84ff}
+
+/* iOS timeline (12 s loop) */
+body.launch-on .ios .home{animation:iHome var(--cyc) 2.4s infinite backwards}
+body.launch-on .ios .store{animation:iStore var(--cyc) 2.4s infinite backwards}
+body.launch-on .ios .app{animation:iApp var(--cyc) 2.4s infinite backwards}
+body.launch-on .ios .app .bar i{animation:iBar var(--cyc) 2.4s infinite backwards}
+body.launch-on .ios .dock .press .tap{animation:iTapDock var(--cyc) 2.4s infinite backwards}
+body.launch-on .ios .dock .press .bag{animation:iPress var(--cyc) 2.4s infinite backwards}
+body.launch-on .ios .b-get{animation:iGet var(--cyc) 2.4s infinite backwards}
+body.launch-on .ios .b-prog{animation:iProg var(--cyc) 2.4s infinite backwards}
+body.launch-on .ios .b-open{animation:iOpen var(--cyc) 2.4s infinite backwards}
+body.launch-on .ios .tapget{animation:iTapGet var(--cyc) 2.4s infinite backwards}
+body.launch-on .ios .tapopen{animation:iTapOpen var(--cyc) 2.4s infinite backwards}
+@keyframes iHome{0%,18%{opacity:1;transform:none}25%,92%{opacity:0;transform:scale(1.12)}98%,100%{opacity:1;transform:none}}
+@keyframes iStore{0%,18%{opacity:0;transform:scale(.25)}25%,66%{opacity:1;transform:none}71%,100%{opacity:0;transform:scale(1.06)}}
+@keyframes iApp{0%,67%{opacity:0;transform:scale(.85)}74%,90%{opacity:1;transform:none}96%,100%{opacity:0;transform:scale(1.08)}}
+@keyframes iBar{0%,74%{width:0}88%,100%{width:100%}}
+@keyframes iTapDock{0%,11%{opacity:0;transform:scale(.3)}13%{opacity:.95;transform:scale(1)}18%,100%{opacity:0;transform:scale(1.9)}}
+@keyframes iPress{0%,11%{transform:none}13%,16%{transform:scale(.88)}19%,100%{transform:none}}
+@keyframes iGet{0%,38%{opacity:1}39%,100%{opacity:0}}
+@keyframes iProg{0%,38%{opacity:0}39%,54%{opacity:1}55%,100%{opacity:0}}
+@keyframes iOpen{0%,54%{opacity:0}55%,100%{opacity:1}}
+@keyframes iTapGet{0%,32%{opacity:0;transform:scale(.3)}34%{opacity:.95;transform:scale(1)}39%,100%{opacity:0;transform:scale(1.9)}}
+@keyframes iTapOpen{0%,60%{opacity:0;transform:scale(.3)}62%{opacity:.95;transform:scale(1)}67%,100%{opacity:0;transform:scale(1.9)}}
+
+/* =========================  ANDROID  ========================= */
+.and .home{background:radial-gradient(ellipse at 70% 15%,#0b5a63 0%,#06222a 46%,#02080b 100%)}
+.and .clock{position:absolute;top:16cqw;left:0;right:0;text-align:center;font-size:17cqw;font-weight:300;color:#fff;letter-spacing:.02em;line-height:1}
+.and .clock small{display:block;font-size:3.4cqw;font-weight:400;letter-spacing:.1em;margin-top:1.4cqw;color:#cfe}
+.and .grid{top:44cqw;gap:6cqw 4.4cqw}
+.and .t{border-radius:50%}
+.and .dock{background:none;backdrop-filter:none;bottom:12cqw;height:19cqw;padding:0 3cqw}
+.and .dock .play,.and .dock .t,.and .dock .kx{border-radius:50%}
+.and .sp{position:absolute;left:6cqw;right:6cqw;bottom:5.4cqw;height:9cqw;border-radius:5cqw;background:rgba(255,255,255,.18);display:flex;align-items:center;padding-left:4cqw;font-size:3.2cqw;color:#dfe}
+.and .sp i{width:4cqw;height:4cqw;border-radius:50%;border:.7cqw solid #fff;margin-right:2.4cqw}
+.pstore{background:#101416;opacity:0;transform:scale(.3);transform-origin:50% 86%}
+.pstore .search{position:absolute;left:5cqw;right:5cqw;top:14cqw;height:11cqw;border-radius:6cqw;background:#1f272b;display:flex;align-items:center;gap:3cqw;padding:0 4cqw;font-size:3.8cqw;color:#e6efe9}
+.pstore .search i{width:4.2cqw;height:4.2cqw;border-radius:50%;border:.7cqw solid #9fb0b6}
+.pstore .search u{margin-left:auto;width:6.6cqw;height:6.6cqw;border-radius:50%;background:linear-gradient(145deg,#ffd86b,#e0a800)}
+.pstore .app-h{position:absolute;left:5cqw;right:5cqw;top:32cqw;display:grid;grid-template-columns:22cqw 1fr;column-gap:4cqw;align-items:center}
+.pstore .app-h .kx{width:22cqw;border-radius:24%}
+.pstore h6{font-size:5.4cqw;font-weight:600;color:#fff;line-height:1.15}
+.pstore p{font-size:3.1cqw;color:#7fe3a0;margin-top:.8cqw}
+.pstore .stats{position:absolute;left:5cqw;right:5cqw;top:58cqw;display:grid;grid-template-columns:repeat(3,1fr);text-align:center;font-size:3.6cqw;color:#fff;font-weight:600}
+.pstore .stats small{display:block;font-size:2.6cqw;color:#8a979d;font-weight:400;margin-top:.8cqw}
+.pstore .stats span+span{border-left:.3cqw solid #2c373c}
+.ibtn{position:absolute;left:5cqw;right:5cqw;top:72cqw;height:10.5cqw}
+.ibtn>*:not(.tap){position:absolute;inset:0;border-radius:6cqw;display:grid;place-items:center;font-size:3.8cqw;font-weight:600}
+.a-install{background:#25d96a;color:#04210f}
+.a-prog{background:#1f272b;color:#cfe;opacity:0;overflow:hidden;justify-items:start}
+.a-prog i{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#1ba857,#25d96a)}
+.a-prog em{position:relative;font-style:normal;padding-left:5cqw;color:#fff}
+.a-open{background:#25d96a;color:#04210f;opacity:0}
+.pstore .lines{position:absolute;left:5cqw;right:5cqw;top:90cqw}
+.pstore .lines b{display:block;height:3cqw;border-radius:2cqw;background:#1f272b;margin-bottom:3cqw}
+.pstore .lines b:nth-child(1){width:46%;background:#2a363b}.pstore .lines b:nth-child(2){width:92%}.pstore .lines b:nth-child(3){width:78%}.pstore .lines b:nth-child(4){width:60%}
+.and .app{opacity:0}
+.and .navb{position:absolute;z-index:26;bottom:2.4cqw;left:50%;width:26cqw;height:1.1cqw;border-radius:1cqw;background:#fff;opacity:.8;transform:translateX(-50%)}
+
+/* Android timeline (12 s loop) */
+body.launch-on .and .home{animation:aHome var(--cyc) 3.2s infinite backwards}
+body.launch-on .and .pstore{animation:aStore var(--cyc) 3.2s infinite backwards}
+body.launch-on .and .app{animation:iApp var(--cyc) 3.2s infinite backwards}
+body.launch-on .and .app .bar i{animation:iBar var(--cyc) 3.2s infinite backwards}
+body.launch-on .and .dock .press .tap{animation:iTapDock var(--cyc) 3.2s infinite backwards}
+body.launch-on .and .dock .press .play{animation:iPress var(--cyc) 3.2s infinite backwards}
+body.launch-on .and .a-install{animation:aIns var(--cyc) 3.2s infinite backwards}
+body.launch-on .and .a-prog{animation:aProg var(--cyc) 3.2s infinite backwards}
+body.launch-on .and .a-prog i{animation:aFill var(--cyc) 3.2s infinite backwards}
+body.launch-on .and .a-open{animation:aOpen var(--cyc) 3.2s infinite backwards}
+body.launch-on .and .tapins{animation:aTapIns var(--cyc) 3.2s infinite backwards}
+body.launch-on .and .tapopen{animation:aTapOpen var(--cyc) 3.2s infinite backwards}
+@keyframes aHome{0%,18%{opacity:1;transform:none}25%,92%{opacity:0;transform:scale(1.1)}98%,100%{opacity:1;transform:none}}
+@keyframes aStore{0%,18%{opacity:0;transform:scale(.3)}25%,66%{opacity:1;transform:none}71%,100%{opacity:0;transform:scale(1.05)}}
+@keyframes aIns{0%,34%{opacity:1}35%,100%{opacity:0}}
+@keyframes aProg{0%,34%{opacity:0}35%,56%{opacity:1}57%,100%{opacity:0}}
+@keyframes aFill{0%,35%{width:0}56%,100%{width:100%}}
+@keyframes aOpen{0%,56%{opacity:0}57%,100%{opacity:1}}
+@keyframes aTapIns{0%,29%{opacity:0;transform:scale(.3)}31%{opacity:.95;transform:scale(1)}36%,100%{opacity:0;transform:scale(1.9)}}
+@keyframes aTapOpen{0%,61%{opacity:0;transform:scale(.3)}63%{opacity:.95;transform:scale(1)}68%,100%{opacity:0;transform:scale(1.9)}}
+
+@media (prefers-reduced-motion:reduce){.l-title .w{opacity:1!important;transform:none!important;filter:none!important}}
+
+/* ---------- PAGE 2 -> PAGE 3 TRANSITION: neat and calm (page 2 lifts away, page 3 rises in) ---------- */
+#event.leave:not(.on){transition:opacity .5s ease,visibility 0s .5s}
+#event.leave .stack{animation:evOut .45s ease-in forwards}
+#event.leave .stack *{animation-play-state:paused!important}
+@keyframes evOut{to{transform:translateY(-14px) scale(.985);opacity:0}}
+#launch.on{transition:opacity .7s ease}
+body.launch-on .l-stack{animation:pageIn .9s var(--ease) both}
+@keyframes pageIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+
+
+/* ---------- PHONES LEAVE, STAMP LANDS ---------- */
+.devices{position:relative}
+.devices.out .dev{animation:devOut .9s ease-in forwards!important}
+@keyframes devOut{to{opacity:0;transform:translateY(-18px) scale(.9);filter:blur(6px)}}
+.devices.gone .dev{visibility:hidden}
+.devices.gone .dev,.devices.gone .dev *{animation:none!important}      /* phones are finished: stop their animations */
+
+.stamp{position:absolute;left:50%;top:50%;width:min(calc(max(var(--pw),112px)*1.45),64vw);aspect-ratio:1;
+  translate:-50% -52%;pointer-events:none;opacity:0;z-index:5}
+.stamp img{position:relative;display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none;
+  transform-origin:50% 50%;filter:drop-shadow(0 0 10px rgba(255,200,60,.35))}
+.stamp.on{opacity:1}
+.stamp.on img{animation:stampDown 1.15s both,stampGlow 3.2s 1.2s ease-in-out infinite}
+/* the stamp comes down from the front (big + blurred), slams on the page, squashes, rebounds and settles slightly tilted */
+@keyframes stampDown{
+  0%  {opacity:0;transform:scale(3.1) rotate(-20deg);filter:blur(9px);animation-timing-function:cubic-bezier(.55,0,.9,.5)}
+  46% {opacity:1;transform:scale(1.22) rotate(-9deg);filter:blur(1px);animation-timing-function:cubic-bezier(.4,0,1,1)}
+  60% {opacity:1;transform:scale(.88,.9) rotate(-6deg);filter:blur(0) brightness(1.6) drop-shadow(0 0 28px rgba(255,216,107,.95));animation-timing-function:ease-out}
+  74% {transform:scale(1.04) rotate(-6deg);filter:brightness(1.15) drop-shadow(0 0 16px rgba(255,216,107,.6));animation-timing-function:ease-in-out}
+  88% {transform:scale(.985) rotate(-6deg)}
+  100%{opacity:1;transform:scale(1) rotate(-6deg);filter:drop-shadow(0 0 10px rgba(255,200,60,.35))}
+}
+@keyframes stampGlow{50%{filter:drop-shadow(0 0 18px rgba(255,200,60,.55))}}
+/* ink shock-wave at the moment of impact */
+.stamp .ring{position:absolute;inset:6%;border-radius:50%;border:2px solid rgba(255,216,107,.8);opacity:0;pointer-events:none}
+.stamp.on .ring{animation:stampRing .8s .66s ease-out forwards}
+.stamp.on .ring.r2{animation-delay:.78s;border-color:rgba(31,255,74,.7)}
+@keyframes stampRing{0%{opacity:.9;transform:scale(.8)}100%{opacity:0;transform:scale(1.55)}}
+/* tiny shake of the whole block on impact */
+.devices.shake{animation:stampShake .35s .66s ease-out}
+@keyframes stampShake{0%,100%{transform:none}20%{transform:translate(-3px,3px)}45%{transform:translate(3px,-2px)}70%{transform:translate(-2px,1px)}}
+@media (prefers-reduced-motion:reduce){.stamp.on img{animation:none;opacity:1}}
+
+
+/* ---------- PAGE 3 BACKGROUND PHOTO (business people + handshake, Gemini mark removed) ---------- */
+#launch{--cyc:8.5s}   /* phone install animation length (was 12s): lower = faster */
+.l-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transform:translateZ(0);
+  background:
+    radial-gradient(ellipse at 50% 46%,rgba(0,0,0,.30) 0%,rgba(0,0,0,.05) 55%,rgba(0,0,0,.45) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.05) 30%,rgba(0,0,0,.05) 70%,rgba(0,0,0,.6) 100%),
+    url(../assets/page3-bg.jpg) center bottom/cover no-repeat}
+body.launch-on .l-bg{animation:bgIn 1.2s .1s ease forwards}
+@keyframes bgIn{to{opacity:.95}}
+/* phones / small screens: lighter image */
+@media (max-width:700px){
+  .l-bg{background:
+    radial-gradient(ellipse at 50% 46%,rgba(0,0,0,.30) 0%,rgba(0,0,0,.05) 55%,rgba(0,0,0,.45) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.05) 30%,rgba(0,0,0,.05) 70%,rgba(0,0,0,.6) 100%),
+    url(../assets/page3-bg-m.jpg) 50% bottom/cover no-repeat}
+}

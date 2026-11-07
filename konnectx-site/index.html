@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KonnectX | Business Network Meet | 24 Nov 2026</title>
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/page3.css">
+<link rel="stylesheet" href="css/footer-globe.css">
+</head>
+<body>
+
+<!-- PAGE OPENING ANIMATION: line draws, logo mark glows, two panels slide apart -->
+<div class="opener" id="opener" aria-hidden="true">
+  <div class="op-panel op-top"></div>
+  <div class="op-panel op-bot"></div>
+</div>
+
+<!-- BACKGROUND VIDEO (optional): save your video as assets/bg-video.mp4. Shows only on the event section. -->
+<video class="bg-video" id="bgVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+  <source src="assets/bg-video.mp4" type="video/mp4">
+</video>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div class="aurora" aria-hidden="true"><i class="o1"></i><i class="o2"></i><i class="o3"></i></div>
+<!-- FOOTER HALF GLOBE (very bottom of all 3 pages) -->
+<div class="footer-globe" aria-hidden="true"><img src="assets/footer-globe.webp" alt="" draggable="false"></div>
+
+<!-- ============ SECTION 1 : INTRO ============ -->
+<section class="scene on" id="intro">
+  <div class="stack">
+    <div class="logo-wrap big-logo">
+      <div class="pulse" aria-hidden="true"></div>
+      <img class="logo" src="assets/logo-neon.png" alt="KonnectX logo" draggable="false">
+      <div class="sweep" aria-hidden="true"></div>
+    </div>
+
+    <h1 class="name" aria-label="KonnectX">
+      <span>K</span><span>o</span><span>n</span><span>n</span><span>e</span><span>c</span><span>t</span><span class="x"><img class="kxx" src="assets/x-chrome.png" alt="X" draggable="false"></span>
+    </h1>
+
+    <div class="tag"><i></i><p>Connections that create opportunities</p><i></i></div>
+
+    <p class="motto"><span>PLAN</span><b>•</b><span>CONNECT</span><b>•</b><span>GROW</span></p>
+  </div>
+</section>
+
+<!-- ============ SECTION 2 : EVENT ============ -->
+<section class="scene" id="event">
+  <div class="stack">
+    <div class="logo-wrap small-logo e-logo">
+      <div class="pulse" aria-hidden="true"></div>
+      <img class="logo" src="assets/logo-neon.png" alt="KonnectX logo" draggable="false">
+      <div class="sweep" aria-hidden="true"></div>
+    </div>
+
+    <div class="presents e-presents">
+      <p class="small"><b>Konnect<img class="kxx" src="assets/x-chrome.png" alt="X" draggable="false"></b> presents</p>
+      <h2 class="big">Business Network Meet</h2>
+    </div>
+
+    <div class="shine-line e-line" aria-hidden="true"></div>
+
+    <!-- STAGE: people walk in, shake hands, show thumbs-up, then SUCCESS + venue appear BETWEEN them -->
+    <div class="stage" id="stage" aria-label="Handshake">
+      <video class="hs-src" id="hsVideo" muted playsinline preload="auto" aria-hidden="true">
+        <source src="assets/handshake.mp4" type="video/mp4">
+      </video>
+      <canvas class="half hl-c" id="hsL" aria-hidden="true"></canvas>
+      <canvas class="half hr-c" id="hsR" aria-hidden="true"></canvas>
+
+      <div class="gap">
+        <div class="success"><span>Bringing right<br>people together</span></div>
+        <div class="infowrap"><div class="info e-info" aria-label="Event details">
+          <div class="glowring" aria-hidden="true"></div>
+          <div class="inner">
+            <p class="label">DATE</p>
+            <p class="date">24 NOV 2026</p>
+            <div class="divider"></div>
+            <p class="label">VENUE</p>
+            <p class="venue">AAA CINEMAS</p>
+            <p class="venue-sub">KAILASAPURAM, VISAKHAPATNAM<br>ANDHRA PRADESH</p>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 3 : WE ARE LAUNCHING SOON ============ -->
+<section class="scene" id="launch">
+  <div class="l-bg" aria-hidden="true"></div>
+  <div class="stack l-stack">
+    <p class="l-eyebrow" aria-label="KONNECTX">KONNECT<img class="kxx" src="assets/x-chrome.png" alt="X" draggable="false"></p>
+    <h2 class="l-title" aria-label="We are launching soon"><span class="w">We are</span><span class="w">launching</span><span class="w">soon</span></h2>
+    <div class="shine-line l-line" aria-hidden="true"></div>
+    <p class="l-sub">The <b>Konnect<img class="kxx" src="assets/x-chrome.png" alt="X" draggable="false"></b> app is coming to the App Store &amp; Google Play</p>
+
+    <div class="devices">
+      <!-- iPHONE: home screen -> App Store opens -> KonnectX -> GET -> OPEN -> app launches -->
+      <figure class="dev ios">
+        <div class="phone" role="img" aria-label="iPhone opening the App Store and installing KonnectX">
+          <div class="bezel"><div class="screen">
+            <i class="island"></i>
+            <div class="sbar"><span>9:41</span><i></i></div>
+            <div class="l home">
+              <div class="grid"><i class="t" style="--c1:#ff6b6b;--c2:#c0392b"></i><i class="t" style="--c1:#feca57;--c2:#ee9a00"></i><i class="t" style="--c1:#48dbfb;--c2:#0a8fd0"></i><i class="t" style="--c1:#1dd1a1;--c2:#0b8a6b"></i><i class="t" style="--c1:#a29bfe;--c2:#5b4bd1"></i><i class="t" style="--c1:#ff9ff3;--c2:#c8409a"></i><i class="t" style="--c1:#54a0ff;--c2:#1f4fd6"></i><i class="t" style="--c1:#ff9f43;--c2:#d35400"></i><i class="t" style="--c1:#ff6b6b;--c2:#c0392b"></i><i class="t" style="--c1:#feca57;--c2:#ee9a00"></i><i class="t" style="--c1:#48dbfb;--c2:#0a8fd0"></i><i class="t" style="--c1:#1dd1a1;--c2:#0b8a6b"></i><i class="t" style="--c1:#a29bfe;--c2:#5b4bd1"></i><i class="t" style="--c1:#ff9ff3;--c2:#c8409a"></i><i class="t" style="--c1:#54a0ff;--c2:#1f4fd6"></i><i class="t" style="--c1:#ff9f43;--c2:#d35400"></i></div>
+              <div class="dock">
+                <div class="press"><i class="bag"></i><i class="tap"></i></div>
+                <i class="t" style="--c1:#1dd1a1;--c2:#0b8a6b"></i><i class="t" style="--c1:#a29bfe;--c2:#5b4bd1"></i><i class="t" style="--c1:#ff9ff3;--c2:#c8409a"></i>
+              </div>
+            </div>
+            <div class="l store">
+              <div class="top"><h5>Apps</h5><i></i></div>
+              <div class="sec">APP STORE · BUSINESS</div>
+              <div class="listing"><i class="kx"></i><div><h6>Konnect<img class="kxx" src="assets/x-chrome.png" alt="X" draggable="false"></h6><p>Connections that create<br>opportunities</p></div></div>
+              <div class="btnrow"><small><b>4.9 ★★★★★</b><br>Business Network Meet</small>
+                <div class="bslot"><span class="b-get">GET</span><span class="b-prog"></span><span class="b-open">OPEN</span><i class="tap tapget"></i><i class="tap tapopen"></i></div></div>
+              <div class="shots"><i></i><i></i><i></i></div>
+              <div class="tabs"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="l splash app">
+              <img src="assets/logo-neon.jpg" alt="" draggable="false">
+              <h4 aria-label="KonnectX">Konnect<img class="kxx" src="assets/x-chrome.png" alt="X" draggable="false"></h4><p>Connections that create opportunities</p><div class="bar"><i></i></div>
+            </div>
+            <div class="hbar"></div>
+          </div></div>
+        </div>
+        <figcaption><b>iPhone</b> · App Store</figcaption>
+      </figure>
+
+      <!-- ANDROID: home screen -> Play Store opens -> KonnectX -> Install -> Open -> app launches -->
+      <figure class="dev and">
+        <div class="phone" role="img" aria-label="Android phone opening the Play Store and installing KonnectX">
+          <div class="bezel"><div class="screen">
+            <i class="hole"></i>
+            <div class="sbar"><span>9:41</span><i></i></div>
+            <div class="l home">
+              <div class="clock">9:41<small>THU, 5 NOV</small></div>
+              <div class="grid"><i class="t" style="--c1:#48dbfb;--c2:#0a8fd0"></i><i class="t" style="--c1:#1dd1a1;--c2:#0b8a6b"></i><i class="t" style="--c1:#a29bfe;--c2:#5b4bd1"></i><i class="t" style="--c1:#ff9ff3;--c2:#c8409a"></i><i class="t" style="--c1:#54a0ff;--c2:#1f4fd6"></i><i class="t" style="--c1:#ff9f43;--c2:#d35400"></i><i class="t" style="--c1:#ff6b6b;--c2:#c0392b"></i><i class="t" style="--c1:#feca57;--c2:#ee9a00"></i></div>
+              <div class="dock">
+                <div class="press"><i class="play"></i><i class="tap"></i></div>
+                <i class="t" style="--c1:#ff9ff3;--c2:#c8409a"></i><i class="t" style="--c1:#54a0ff;--c2:#1f4fd6"></i><i class="t" style="--c1:#ff9f43;--c2:#d35400"></i>
+              </div>
+              <div class="sp"><i></i>Search</div>
+            </div>
+            <div class="l pstore">
+              <div class="search"><i></i>Konnect<img class="kxx" src="assets/x-chrome.png" alt="X" draggable="false"><u></u></div>
+              <div class="app-h"><i class="kx"></i><div><h6>Konnect<img class="kxx" src="assets/x-chrome.png" alt="X" draggable="false"></h6><p>Business networking</p></div></div>
+              <div class="stats"><span>4.9 ★<small>Rating</small></span><span>10K+<small>Downloads</small></span><span>3+<small>Rated for</small></span></div>
+              <div class="ibtn"><span class="a-install">Install</span><span class="a-prog"><i></i><em>Installing…</em></span><span class="a-open">Open</span><i class="tap tapins"></i><i class="tap tapopen"></i></div>
+              <div class="lines"><b></b><b></b><b></b><b></b></div>
+            </div>
+            <div class="l splash app">
+              <img src="assets/logo-neon.jpg" alt="" draggable="false">
+              <h4 aria-label="KonnectX">Konnect<img class="kxx" src="assets/x-chrome.png" alt="X" draggable="false"></h4><p>Connections that create opportunities</p><div class="bar"><i></i></div>
+            </div>
+            <div class="navb"></div>
+          </div></div>
+        </div>
+        <figcaption><b>Android</b> · Google Play</figcaption>
+      </figure>
+      <!-- STAMP: after the phones finish, they disappear and this stamp is stamped in their place -->
+      <div class="stamp" id="stamp" aria-hidden="true"><i class="ring"></i><i class="ring r2"></i><img src="assets/stamp.webp" alt="" draggable="false"></div>
+    </div>
+  </div>
+</section>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+
+
+
+<script src="js/page3.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
