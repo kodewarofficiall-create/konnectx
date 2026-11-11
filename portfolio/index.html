@@ -34,6 +34,7 @@
 
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         body {
@@ -181,6 +182,306 @@
         }
 
         /* ==============================
+   SHARE WIDGET
+============================== */
+
+        .share-widget {
+            position: fixed;
+            z-index: 120;
+
+            top: 24px;
+            right: 28px;
+        }
+
+        .share-toggle {
+            position: relative;
+
+            width: 54px;
+            height: 54px;
+
+            display: grid;
+            place-items: center;
+
+            padding: 0;
+
+            border: 1px solid rgba(66, 255, 173, .55);
+            border-radius: 50%;
+
+            background:
+                radial-gradient(circle at 30% 20%, rgba(66, 255, 173, .22), transparent 70%),
+                rgba(9, 22, 18, .88);
+
+            color: var(--green);
+
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+
+            box-shadow:
+                0 0 20px rgba(66, 255, 173, .22),
+                0 10px 26px rgba(0, 0, 0, .4),
+                inset 0 0 14px rgba(66, 255, 173, .06);
+
+            cursor: pointer;
+
+            transition:
+                border-color .3s ease,
+                box-shadow .3s ease,
+                background .3s ease,
+                transform .3s ease;
+        }
+
+        .share-toggle:hover,
+        .share-toggle:focus-visible {
+            border-color: var(--green);
+            box-shadow:
+                0 0 30px rgba(66, 255, 173, .4),
+                0 10px 26px rgba(0, 0, 0, .4);
+            outline: none;
+        }
+
+        .share-toggle:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 4px;
+        }
+
+        .share-toggle svg {
+            width: 22px;
+            height: 22px;
+            transition: transform .35s ease;
+        }
+
+        .share-toggle .share-close-icon {
+            display: none;
+        }
+
+        .share-toggle.is-open {
+            background: var(--green);
+            color: #04170e;
+            border-color: var(--green);
+        }
+
+        .share-toggle.is-open .share-open-icon {
+            display: none;
+        }
+
+        .share-toggle.is-open .share-close-icon {
+            display: block;
+            transform: rotate(90deg);
+        }
+
+        /* PANEL */
+
+        .share-panel {
+            position: absolute;
+
+            top: calc(100% + 14px);
+            right: 0;
+
+            width: 272px;
+
+            padding: 16px;
+
+            border: 1px solid rgba(66, 255, 173, .4);
+            border-radius: 18px;
+
+            background:
+                radial-gradient(ellipse at 100% 0%, rgba(66, 255, 173, .14), transparent 60%),
+                rgba(7, 18, 15, .96);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 0 0 1px rgba(66, 255, 173, .06),
+                0 0 30px rgba(66, 255, 173, .16),
+                0 22px 44px rgba(0, 0, 0, .55);
+
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px) scale(.96);
+            transform-origin: top right;
+
+            pointer-events: none;
+
+            transition:
+                opacity .28s ease,
+                transform .28s ease,
+                visibility .28s ease;
+        }
+
+        .share-panel::before {
+            content: "";
+            position: absolute;
+
+            top: -6px;
+            right: 20px;
+
+            width: 11px;
+            height: 11px;
+
+            border-top: 1px solid rgba(66, 255, 173, .4);
+            border-left: 1px solid rgba(66, 255, 173, .4);
+
+            background: #081712;
+
+            transform: rotate(45deg);
+        }
+
+        .share-panel.is-open {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            pointer-events: auto;
+        }
+
+        .share-title {
+            margin-bottom: 12px;
+
+            color: #9db3a8;
+
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+
+        .share-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .share-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 9px 11px;
+
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 12px;
+
+            background: rgba(255, 255, 255, .035);
+
+            color: #f2fff9;
+            text-decoration: none;
+
+            transition:
+                transform .25s ease,
+                border-color .25s ease,
+                background .25s ease;
+        }
+
+        .share-link:hover,
+        .share-link:focus-visible {
+            transform: translateX(-4px);
+            outline: none;
+        }
+
+        .share-link .share-icon {
+            width: 36px;
+            height: 36px;
+
+            flex: 0 0 auto;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, .07);
+        }
+
+        .share-link .share-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .share-link .share-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+
+            min-width: 0;
+        }
+
+        .share-link .share-name {
+            font-size: 12.5px;
+            font-weight: 600;
+            letter-spacing: .02em;
+        }
+
+        .share-link .share-handle {
+            color: #8ba096;
+            font-size: 10px;
+            letter-spacing: .02em;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .share-link .share-go {
+            margin-left: auto;
+
+            color: #6c8378;
+            font-size: 16px;
+            line-height: 1;
+
+            transition: color .25s ease, transform .25s ease;
+        }
+
+        /* BRAND TINTS */
+
+        .share-link.instagram .share-icon {
+            background: rgba(255, 105, 180, .14);
+            color: #ff69b4;
+        }
+
+        .share-link.instagram:hover,
+        .share-link.instagram:focus-visible {
+            border-color: rgba(255, 105, 180, .6);
+            background: rgba(255, 105, 180, .1);
+        }
+
+        .share-link.instagram:hover .share-go,
+        .share-link.instagram:focus-visible .share-go {
+            color: #ff69b4;
+        }
+
+        .share-link.whatsapp .share-icon {
+            background: rgba(37, 211, 102, .14);
+            color: #25d366;
+        }
+
+        .share-link.whatsapp:hover,
+        .share-link.whatsapp:focus-visible {
+            border-color: rgba(37, 211, 102, .6);
+            background: rgba(37, 211, 102, .1);
+        }
+
+        .share-link.whatsapp:hover .share-go,
+        .share-link.whatsapp:focus-visible .share-go {
+            color: #25d366;
+        }
+
+        .share-link.linkedin .share-icon {
+            background: rgba(56, 168, 255, .14);
+            color: #38a8ff;
+        }
+
+        .share-link.linkedin:hover,
+        .share-link.linkedin:focus-visible {
+            border-color: rgba(56, 168, 255, .6);
+            background: rgba(56, 168, 255, .1);
+        }
+
+        .share-link.linkedin:hover .share-go,
+        .share-link.linkedin:focus-visible .share-go {
+            color: #38a8ff;
+        }
+
+        /* ==============================
    HOME PAGE
 ============================== */
 
@@ -188,7 +489,7 @@
             min-height: 100vh;
             min-height: 100svh;
 
-            padding: 35px 20px 125px;
+            padding: 35px 20px 95px;
 
             display: flex;
             flex-direction: column;
@@ -340,21 +641,262 @@
         }
 
         /* ==============================
-   SOCIAL MEDIA TILES
-   STATIONARY - NO SHAKING
+   MAGAZINE CAROUSEL
+============================== */
+
+        .mag-carousel {
+            width: 100%;
+        }
+
+        .mag-banner {
+            position: relative;
+            width: 100%;
+            min-height: 196px;
+
+            border: 1px solid rgba(66, 255, 173, .55);
+            border-radius: 20px;
+
+            background:
+                radial-gradient(ellipse at 88% 50%, rgba(30, 170, 115, .38), transparent 62%),
+                radial-gradient(ellipse at 12% 0%, rgba(66, 255, 173, .12), transparent 55%),
+                linear-gradient(120deg, #051612 0%, #040f0c 55%, #061a13 100%);
+
+            box-shadow:
+                0 0 0 1px rgba(66, 255, 173, .08),
+                0 0 28px rgba(66, 255, 173, .16),
+                0 16px 36px rgba(0, 0, 0, .45),
+                inset 0 0 40px rgba(66, 255, 173, .05);
+
+            overflow: hidden;
+        }
+
+        .mag-banner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+
+            background: linear-gradient(115deg, transparent 52%, rgba(66, 255, 173, .07));
+            pointer-events: none;
+        }
+
+        .mag-track {
+            position: absolute;
+            inset: 0;
+        }
+
+        .mag-slide {
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            align-items: center;
+
+            padding: 20px 46px 20px 42px;
+
+            color: inherit;
+            text-decoration: none;
+
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(16px);
+            pointer-events: none;
+
+            transition:
+                opacity .45s ease,
+                transform .45s ease,
+                visibility .45s ease;
+        }
+
+        .mag-slide.is-active {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            pointer-events: auto;
+        }
+
+        .mag-copy {
+            position: relative;
+            z-index: 2;
+
+            flex: 1 1 auto;
+            max-width: 62%;
+        }
+
+        .mag-title {
+            color: var(--green);
+
+            font-size: clamp(19px, 4.4vw, 26px);
+            font-weight: 700;
+            line-height: 1.16;
+            letter-spacing: .01em;
+
+            text-shadow: 0 0 18px rgba(66, 255, 173, .45);
+        }
+
+        .mag-title span {
+            color: var(--green);
+            text-shadow: 0 0 16px rgba(66, 255, 173, .55);
+        }
+
+        .mag-sub {
+            margin-top: 8px;
+
+            max-width: 230px;
+
+            color: #c3d4cb;
+            font-size: clamp(11px, 2.4vw, 13px);
+            line-height: 1.55;
+        }
+
+        .mag-slide:focus-visible {
+            outline: none;
+        }
+
+        /* MAGAZINE IMAGE */
+
+        .mag-visual {
+            position: absolute;
+            z-index: 2;
+
+            right: 18px;
+            top: 50%;
+
+            width: 41%;
+            max-width: 190px;
+            aspect-ratio: 1.3;
+
+            transform: translateY(-50%);
+
+            pointer-events: none;
+        }
+
+        .mag-photo {
+            display: block;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            border: 1px solid rgba(66, 255, 173, .45);
+            border-radius: 14px;
+
+            box-shadow:
+                0 0 22px rgba(66, 255, 173, .18),
+                0 12px 26px rgba(0, 0, 0, .55);
+
+            transform: rotate(2deg);
+        }
+
+        /* ARROWS */
+
+        .mag-arrow {
+            position: absolute;
+            z-index: 6;
+
+            top: 50%;
+
+            width: 30px;
+            height: 40px;
+
+            display: grid;
+            place-items: center;
+
+            padding: 0;
+
+            border: 0;
+            border-radius: 9px;
+
+            background: transparent;
+            color: #ffffff;
+
+            opacity: .8;
+
+            transform: translateY(-50%);
+
+            cursor: pointer;
+
+            transition:
+                color .25s ease,
+                opacity .25s ease,
+                background .25s ease;
+        }
+
+        .mag-arrow:hover,
+        .mag-arrow:focus-visible {
+            opacity: 1;
+            color: var(--green);
+            background: rgba(66, 255, 173, .08);
+            outline: none;
+        }
+
+        .mag-arrow svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .mag-prev {
+            left: 3px;
+        }
+
+        .mag-next {
+            right: 3px;
+        }
+
+        /* DOTS */
+
+        .mag-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+
+            margin-top: 10px;
+        }
+
+        .mag-dot {
+            width: 7px;
+            height: 7px;
+
+            padding: 0;
+
+            border: 0;
+            border-radius: 50%;
+
+            background: rgba(244, 255, 249, .32);
+
+            cursor: pointer;
+
+            transition:
+                background .25s ease,
+                box-shadow .25s ease,
+                transform .25s ease;
+        }
+
+        .mag-dot:hover {
+            background: rgba(244, 255, 249, .6);
+        }
+
+        .mag-dot.is-active {
+            background: var(--green);
+            box-shadow: 0 0 10px rgba(66, 255, 173, .8);
+            transform: scale(1.15);
+        }
+
+        /* ==============================
+   FOOTER CREDIT
 ============================== */
 
         .social-section {
             position: fixed;
 
             left: 50%;
-            bottom: calc(25px + env(safe-area-inset-bottom, 0px));
+            bottom: calc(22px + env(safe-area-inset-bottom, 0px));
 
             width: min(480px, calc(100% - 36px));
 
             z-index: 100;
 
-            /* Stable positioning */
             transform: translateX(-50%);
 
             opacity: 1;
@@ -363,9 +905,8 @@
         }
 
         .powered-by {
-            margin-top: 10px;
             color: var(--grey);
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: .08em;
             text-align: center;
         }
@@ -376,143 +917,109 @@
             text-shadow: 0 0 12px rgba(66, 255, 173, .35);
         }
 
-        /* THREE COLUMN GRID */
+        /* ==============================
+   MOBILE SOCIAL LINKS
+============================== */
 
-        .social-arc {
-            display: grid;
-
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-
-            gap: 14px;
-            width: 100%;
+        .mobile-social {
+            display: none;
         }
 
-        /* COMMON TILE */
-
-        .social-link {
-            position: relative;
-
-            width: 100%;
+        .mobile-social a {
+            flex: 1 1 0;
             min-width: 0;
-            height: 78px;
 
             display: flex;
             flex-direction: column;
-
             align-items: center;
             justify-content: center;
+            gap: 8px;
 
-            gap: 7px;
+            padding: 14px 6px 12px;
+
+            border: 1px solid rgba(220, 235, 244, .18);
+            border-radius: 12px;
+
+            background: linear-gradient(160deg,
+                    rgba(20, 27, 32, .92),
+                    rgba(11, 17, 22, .86));
 
             text-decoration: none;
 
-            border-radius: 14px;
-
-            background: rgba(10, 19, 24, .9);
-
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-
-            border: 1px solid rgba(255, 255, 255, .15);
-
-            box-shadow:
-                0 8px 25px rgba(0, 0, 0, .3),
-                inset 0 0 15px rgba(255, 255, 255, .025);
-
-            /* No animation or floating movement */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
 
             transition:
-                transform .3s ease,
-                box-shadow .3s ease,
                 border-color .3s ease,
-                background .3s ease;
-
-            pointer-events: auto;
+                box-shadow .3s ease,
+                transform .3s ease;
         }
 
-        /* SOCIAL ICONS */
-
-        .social-link svg {
-            width: 29px;
-            height: 29px;
-
-            display: block;
-            flex-shrink: 0;
+        .mobile-social svg {
+            width: 26px;
+            height: 26px;
+            flex: 0 0 auto;
         }
 
-        /* SOCIAL LABELS */
-
-        .social-link span {
-            font-family: 'Inter', sans-serif;
-
+        .mobile-social span {
             font-size: 11px;
             font-weight: 600;
-
-            letter-spacing: .5px;
+            letter-spacing: .01em;
+            white-space: nowrap;
         }
 
-        /* INSTAGRAM */
-
-        .social-link.instagram {
-            color: #ff69b4;
-            border-color: rgba(255, 105, 180, .35);
+        .mobile-social a.social-instagram {
+            border-color: rgba(255, 61, 139, .5);
+            box-shadow: 0 0 16px rgba(255, 61, 139, .14);
         }
 
-        .social-link.instagram:hover {
-            transform: translateY(-5px) scale(1.04);
-
-            border-color: #ff69b4;
-
-            background: rgba(255, 70, 150, .13);
-
-            box-shadow:
-                0 0 15px rgba(255, 105, 180, .3),
-                0 0 30px rgba(255, 105, 180, .15);
+        .mobile-social a.social-instagram svg,
+        .mobile-social a.social-instagram span {
+            color: #ff3d8b;
         }
 
-        /* WHATSAPP */
-
-        .social-link.whatsapp {
-            color: #25d366;
-            border-color: rgba(37, 211, 102, .35);
+        .mobile-social a.social-whatsapp {
+            border-color: rgba(66, 255, 173, .45);
+            box-shadow: 0 0 16px rgba(66, 255, 173, .14);
         }
 
-        .social-link.whatsapp:hover {
-            transform: translateY(-5px) scale(1.04);
-
-            border-color: #25d366;
-
-            background: rgba(37, 211, 102, .13);
-
-            box-shadow:
-                0 0 15px rgba(37, 211, 102, .3),
-                0 0 30px rgba(37, 211, 102, .15);
+        .mobile-social a.social-whatsapp svg,
+        .mobile-social a.social-whatsapp span {
+            color: #42ffad;
         }
 
-        /* LINKEDIN */
+        .mobile-social a.social-linkedin {
+            border-color: rgba(56, 168, 255, .5);
+            box-shadow: 0 0 16px rgba(56, 168, 255, .14);
+        }
 
-        .social-link.linkedin {
+        .mobile-social a.social-linkedin svg,
+        .mobile-social a.social-linkedin span {
             color: #38a8ff;
-            border-color: rgba(56, 168, 255, .35);
         }
 
-        .social-link.linkedin:hover {
-            transform: translateY(-5px) scale(1.04);
+        .mobile-social a:hover,
+        .mobile-social a:focus-visible {
+            transform: translateY(-2px);
+            outline: none;
+        }
 
+        .mobile-social a.social-instagram:hover,
+        .mobile-social a.social-instagram:focus-visible {
+            border-color: #ff3d8b;
+            box-shadow: 0 0 24px rgba(255, 61, 139, .4);
+        }
+
+        .mobile-social a.social-whatsapp:hover,
+        .mobile-social a.social-whatsapp:focus-visible {
+            border-color: #42ffad;
+            box-shadow: 0 0 24px rgba(66, 255, 173, .4);
+        }
+
+        .mobile-social a.social-linkedin:hover,
+        .mobile-social a.social-linkedin:focus-visible {
             border-color: #38a8ff;
-
-            background: rgba(56, 168, 255, .13);
-
-            box-shadow:
-                0 0 15px rgba(56, 168, 255, .3),
-                0 0 30px rgba(56, 168, 255, .15);
-        }
-
-        /* KEYBOARD ACCESSIBILITY */
-
-        .social-link:focus-visible {
-            outline: 2px solid white;
-            outline-offset: 4px;
+            box-shadow: 0 0 24px rgba(56, 168, 255, .4);
         }
 
         /* ==============================
@@ -937,6 +1444,10 @@
 
         @media (min-width: 600px) and (max-width: 1024px) {
 
+            .main-page {
+                padding: 30px 20px 72px;
+            }
+
             .content-wrapper {
                 max-width: 520px;
             }
@@ -949,13 +1460,19 @@
                 width: clamp(92px, 13vw, 124px);
             }
 
+            .share-widget {
+                top: 20px;
+                right: 20px;
+            }
+
+            .share-toggle {
+                width: 50px;
+                height: 50px;
+            }
+
             .social-section {
                 width: min(440px, calc(100% - 40px));
                 bottom: 20px;
-            }
-
-            .social-arc {
-                gap: 12px;
             }
 
         }
@@ -971,14 +1488,33 @@
             }
 
             .main-page {
-                padding: 30px 16px 115px;
+                padding: 132px 16px 54px;
+                transform: translateY(-18px);
+            }
+
+            .share-widget {
+                display: none;
+            }
+
+            .mobile-social {
+                display: flex;
+                align-items: stretch;
+                justify-content: center;
+                gap: 10px;
+
+                margin-top: 14px;
+            }
+
+            .share-panel {
+                width: min(272px, calc(100vw - 32px));
+                padding: 14px;
             }
 
             .site-logo {
-                top: 40px;
+                top: 26px;
                 left: 50%;
 
-                width: min(58vw, 190px);
+                width: min(46vw, 158px);
 
                 transform: translateX(-50%);
             }
@@ -986,12 +1522,15 @@
             .brand-title {
                 font-size: clamp(40px, 11vw, 52px);
 
-                margin-bottom: 22px;
+                margin-bottom: 10px;
+            }
+
+            .brand-tagline {
+                margin-top: -4px;
             }
 
             .content-wrapper {
                 gap: 12px;
-                transform: translateY(28px);
             }
 
             .menu-card {
@@ -1015,31 +1554,61 @@
                 font-size: 12px;
             }
 
-            /* SOCIAL TILES */
+            /* MAGAZINE CAROUSEL */
+
+            .mag-banner {
+                min-height: 150px;
+                border-radius: 16px;
+            }
+
+            .mag-slide {
+                padding: 12px 36px 12px 34px;
+            }
+
+            .mag-title {
+                font-size: clamp(17px, 4.8vw, 21px);
+            }
+
+            .mag-copy {
+                max-width: 50%;
+            }
+
+            .mag-sub {
+                margin-top: 6px;
+                max-width: 130px;
+                font-size: 11px;
+            }
+
+            .mag-visual {
+                right: 8px;
+                width: 44%;
+                max-width: 136px;
+            }
+
+            .mag-arrow {
+                width: 26px;
+                height: 36px;
+            }
+
+            .mag-arrow svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .mag-dots {
+                margin-top: 8px;
+            }
+
+            /* FOOTER CREDIT */
 
             .social-section {
                 width: calc(100% - 28px);
 
-                bottom: calc(50px + env(safe-area-inset-bottom, 0px));
+                bottom: calc(18px + env(safe-area-inset-bottom, 0px));
             }
 
-            .social-arc {
-                gap: 8px;
-            }
-
-            .social-link {
-                height: 65px;
-                border-radius: 11px;
-                gap: 5px;
-            }
-
-            .social-link svg {
-                width: 23px;
-                height: 23px;
-            }
-
-            .social-link span {
-                font-size: 10px;
+            .powered-by {
+                font-size: 12px;
             }
 
             /* INNER PAGES */
@@ -1066,21 +1635,59 @@
 
         @media (max-width: 350px) {
 
-            .social-arc {
-                gap: 6px;
+            .mag-banner {
+                min-height: 138px;
             }
 
-            .social-link {
-                height: 60px;
+            .mag-title {
+                font-size: 15px;
             }
 
-            .social-link svg {
-                width: 21px;
-                height: 21px;
+            .mag-sub {
+                font-size: 10px;
             }
 
-            .social-link span {
-                font-size: 9px;
+            .mag-visual {
+                max-width: 118px;
+            }
+
+        }
+
+        /* MID-HEIGHT MOBILE SCREENS */
+
+        @media (max-width: 599px) and (max-height: 800px) {
+
+            .main-page {
+                justify-content: flex-start;
+                padding: 124px 16px 30px;
+                transform: none;
+            }
+
+            .brand-title {
+                margin-bottom: 7px;
+            }
+
+            .content-wrapper {
+                gap: 9px;
+            }
+
+            .menu-card {
+                min-height: 66px;
+                padding: 10px 13px;
+            }
+
+            .mag-banner {
+                min-height: 134px;
+            }
+
+            .mobile-social {
+                margin-top: 8px;
+                gap: 8px;
+            }
+
+            .mobile-social a {
+                padding: 10px 5px 9px;
+                gap: 5px;
             }
 
         }
@@ -1090,21 +1697,486 @@
         @media (max-width: 599px) and (max-height: 700px) {
 
             .site-logo {
-                top: 16px;
-                width: min(42vw, 145px);
+                top: 20px;
+                width: min(46vw, 136px);
             }
 
             .main-page {
                 justify-content: flex-start;
-                padding-top: 98px;
+                padding: 106px 14px 28px;
+                transform: none;
+            }
+
+            .brand-title {
+                font-size: clamp(34px, 10vw, 44px);
+                margin-bottom: 6px;
+            }
+
+            .brand-tagline {
+                margin: -6px 0 12px;
+                font-size: 10.5px;
             }
 
             .content-wrapper {
-                transform: translateY(18px);
+                gap: 8px;
+            }
+
+            .menu-card {
+                min-height: 60px;
+                padding: 9px 12px;
+                gap: 10px;
+            }
+
+            .menu-icon {
+                width: 34px;
+                height: 34px;
+            }
+
+            .menu-text h2 {
+                font-size: 12px;
+            }
+
+            .menu-text p {
+                font-size: 10.5px;
+            }
+
+            .mag-banner {
+                min-height: 118px;
+            }
+
+            .mag-slide {
+                padding: 10px 32px 10px 30px;
+            }
+
+            .mag-title {
+                font-size: 16px;
+            }
+
+            .mag-sub {
+                margin-top: 4px;
+                font-size: 10px;
+            }
+
+            .mag-visual {
+                max-width: 108px;
+            }
+
+            .mag-dots {
+                margin-top: 6px;
+            }
+
+            .mobile-social {
+                margin-top: 6px;
+                gap: 8px;
+            }
+
+            .mobile-social a {
+                padding: 8px 4px 7px;
+                gap: 5px;
+                border-radius: 10px;
+            }
+
+            .mobile-social svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .mobile-social span {
+                font-size: 10px;
+            }
+
+        }
+
+        /* ==============================
+   DESKTOP SHARE FAN
+============================== */
+
+        @media (min-width: 1025px) {
+
+            /* FIT THE PAGE INTO ONE SCREEN */
+
+            .main-page {
+                padding: clamp(16px, 3vh, 32px) 20px clamp(52px, 7.5vh, 88px);
+            }
+
+            .brand-title {
+                font-size: clamp(40px, 6.4vh, 64px);
+                margin-bottom: clamp(10px, 2.2vh, 20px);
+            }
+
+            .brand-tagline {
+                margin: clamp(-14px, -1.6vh, -8px) 0 clamp(10px, 2.2vh, 18px);
+            }
+
+            .content-wrapper {
+                gap: clamp(9px, 1.5vh, 14px);
+            }
+
+            .menu-card {
+                min-height: clamp(68px, 9.2vh, 90px);
+                padding: clamp(11px, 1.9vh, 16px) 20px;
+                gap: clamp(13px, 1.8vh, 17px);
+            }
+
+            .menu-icon {
+                width: clamp(38px, 5vh, 46px);
+                height: clamp(38px, 5vh, 46px);
+            }
+
+            .mag-banner {
+                min-height: clamp(152px, 21vh, 196px);
+            }
+
+            .mag-slide {
+                padding: clamp(14px, 2vh, 20px) 46px;
+            }
+
+            .mag-title {
+                font-size: clamp(18px, 2.8vh, 24px);
+            }
+
+            .mag-sub {
+                margin-top: clamp(5px, 1vh, 8px);
+                font-size: clamp(11px, 1.5vh, 13px);
+            }
+
+            .mag-visual {
+                right: 26px;
+                width: auto;
+                max-width: 46%;
+                height: clamp(100px, 14.5vh, 148px);
+            }
+
+            .mag-dots {
+                margin-top: clamp(6px, 1vh, 10px);
             }
 
             .social-section {
-                bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+                bottom: clamp(10px, 2vh, 20px);
+            }
+
+            .powered-by {
+                font-size: clamp(11px, 1.5vh, 13px);
+            }
+
+            /* SHARE BUTTON - MIDDLE RIGHT, FLOATING ICONS */
+
+            .share-widget {
+                top: 50%;
+                right: 20px;
+                bottom: auto;
+
+                transform: translateY(-50%);
+            }
+
+            .share-panel {
+                top: 50%;
+                right: calc(100% + 14px);
+                bottom: auto;
+
+                width: 140px;
+                height: 164px;
+
+                padding: 0;
+
+                border: 0;
+                border-radius: 0;
+
+                background: none;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+
+                box-shadow: none;
+
+                transform-origin: right center;
+                transform: translate(12px, -50%) scale(.92);
+            }
+
+            .share-panel.is-open {
+                transform: translate(0, -50%) scale(1);
+            }
+
+            .share-panel::before {
+                display: none;
+            }
+
+            .share-title {
+                display: none;
+            }
+
+            .share-links {
+                position: absolute;
+                inset: 0;
+
+                display: block;
+            }
+
+            .share-link {
+                position: absolute;
+
+                width: 48px;
+                height: 48px;
+
+                margin: 0;
+                padding: 0;
+
+                border: 0;
+                border-radius: 50%;
+                background: transparent;
+            }
+
+            .share-link:nth-child(1) {
+                top: 0;
+                right: 0;
+            }
+
+            .share-link:nth-child(2) {
+                top: 58px;
+                left: 28px;
+            }
+
+            .share-link:nth-child(3) {
+                bottom: 0;
+                right: 0;
+            }
+
+            .share-link .share-text,
+            .share-link .share-go {
+                display: none;
+            }
+
+            .share-link .share-icon {
+                width: 48px;
+                height: 48px;
+
+                border: 1px solid transparent;
+
+                box-shadow: 0 8px 20px rgba(0, 0, 0, .45);
+
+                transition:
+                    transform .25s ease,
+                    box-shadow .25s ease,
+                    border-color .25s ease;
+            }
+
+            .share-link .share-icon svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            .share-link:hover .share-icon,
+            .share-link:focus-visible .share-icon {
+                transform: scale(1.1);
+            }
+
+            .share-link.instagram:hover,
+            .share-link.whatsapp:hover,
+            .share-link.linkedin:hover,
+            .share-link.instagram:focus-visible,
+            .share-link.whatsapp:focus-visible,
+            .share-link.linkedin:focus-visible {
+                transform: none;
+                background: transparent;
+                border-color: transparent;
+            }
+
+            .share-link.instagram .share-icon {
+                background: radial-gradient(circle at 32% 26%, rgba(255, 105, 180, .34), rgba(8, 16, 14, .97));
+                border-color: rgba(255, 105, 180, .6);
+                color: #ff69b4;
+            }
+
+            .share-link.instagram:hover .share-icon,
+            .share-link.instagram:focus-visible .share-icon {
+                border-color: #ff69b4;
+                box-shadow: 0 0 26px rgba(255, 105, 180, .5);
+            }
+
+            .share-link.whatsapp .share-icon {
+                background: radial-gradient(circle at 32% 26%, rgba(37, 211, 102, .34), rgba(8, 16, 14, .97));
+                border-color: rgba(37, 211, 102, .6);
+                color: #25d366;
+            }
+
+            .share-link.whatsapp:hover .share-icon,
+            .share-link.whatsapp:focus-visible .share-icon {
+                border-color: #25d366;
+                box-shadow: 0 0 26px rgba(37, 211, 102, .5);
+            }
+
+            .share-link.linkedin .share-icon {
+                background: radial-gradient(circle at 32% 26%, rgba(56, 168, 255, .34), rgba(8, 16, 14, .97));
+                border-color: rgba(56, 168, 255, .6);
+                color: #38a8ff;
+            }
+
+            .share-link.linkedin:hover .share-icon,
+            .share-link.linkedin:focus-visible .share-icon {
+                border-color: #38a8ff;
+                box-shadow: 0 0 26px rgba(56, 168, 255, .5);
+            }
+
+        }
+
+        /* ==============================
+   MOBILE + TABLET SHARE FAN
+============================== */
+
+        @media (max-width: 1024px) {
+
+            .share-widget {
+                top: 50%;
+                right: 14px;
+                bottom: auto;
+
+                transform: translateY(-50%);
+            }
+
+            .share-panel {
+                top: 50%;
+                right: calc(100% + 14px);
+                bottom: auto;
+
+                width: 140px;
+                height: 164px;
+
+                padding: 0;
+
+                border: 0;
+                border-radius: 0;
+
+                background: none;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+
+                box-shadow: none;
+
+                transform-origin: right center;
+                transform: translate(12px, -50%) scale(.92);
+            }
+
+            .share-panel.is-open {
+                transform: translate(0, -50%) scale(1);
+            }
+
+            .share-panel::before {
+                display: none;
+            }
+
+            .share-title {
+                display: none;
+            }
+
+            .share-links {
+                position: absolute;
+                inset: 0;
+
+                display: block;
+            }
+
+            .share-link {
+                position: absolute;
+
+                width: 48px;
+                height: 48px;
+
+                margin: 0;
+                padding: 0;
+
+                border: 0;
+                border-radius: 50%;
+                background: transparent;
+            }
+
+            .share-link:nth-child(1) {
+                top: 0;
+                right: 0;
+            }
+
+            .share-link:nth-child(2) {
+                top: 58px;
+                left: 0;
+            }
+
+            .share-link:nth-child(3) {
+                bottom: 0;
+                right: 0;
+            }
+
+            .share-link .share-text,
+            .share-link .share-go {
+                display: none;
+            }
+
+            .share-link .share-icon {
+                width: 48px;
+                height: 48px;
+
+                border: 1px solid transparent;
+
+                box-shadow: 0 8px 20px rgba(0, 0, 0, .45);
+
+                transition:
+                    transform .25s ease,
+                    box-shadow .25s ease,
+                    border-color .25s ease;
+            }
+
+            .share-link .share-icon svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            .share-link:hover .share-icon,
+            .share-link:focus-visible .share-icon {
+                transform: scale(1.1);
+            }
+
+            .share-link.instagram:hover,
+            .share-link.whatsapp:hover,
+            .share-link.linkedin:hover,
+            .share-link.instagram:focus-visible,
+            .share-link.whatsapp:focus-visible,
+            .share-link.linkedin:focus-visible {
+                transform: none;
+                background: transparent;
+                border-color: transparent;
+            }
+
+            .share-link.instagram .share-icon {
+                background: radial-gradient(circle at 32% 26%, rgba(255, 105, 180, .34), rgba(8, 16, 14, .97));
+                border-color: rgba(255, 105, 180, .6);
+                color: #ff69b4;
+            }
+
+            .share-link.instagram:hover .share-icon,
+            .share-link.instagram:focus-visible .share-icon {
+                border-color: #ff69b4;
+                box-shadow: 0 0 22px rgba(255, 105, 180, .5);
+            }
+
+            .share-link.whatsapp .share-icon {
+                background: radial-gradient(circle at 32% 26%, rgba(37, 211, 102, .34), rgba(8, 16, 14, .97));
+                border-color: rgba(37, 211, 102, .6);
+                color: #25d366;
+            }
+
+            .share-link.whatsapp:hover .share-icon,
+            .share-link.whatsapp:focus-visible .share-icon {
+                border-color: #25d366;
+                box-shadow: 0 0 22px rgba(37, 211, 102, .5);
+            }
+
+            .share-link.linkedin .share-icon {
+                background: radial-gradient(circle at 32% 26%, rgba(56, 168, 255, .34), rgba(8, 16, 14, .97));
+                border-color: rgba(56, 168, 255, .6);
+                color: #38a8ff;
+            }
+
+            .share-link.linkedin:hover .share-icon,
+            .share-link.linkedin:focus-visible .share-icon {
+                border-color: #38a8ff;
+                box-shadow: 0 0 22px rgba(56, 168, 255, .5);
             }
 
         }
@@ -1237,6 +2309,113 @@
     <img class="site-logo" src="./event-logo.png" alt="KonnectX Logo">
 
     <!-- ==============================
+     SHARE WIDGET
+============================== -->
+
+    <div class="share-widget">
+
+        <button class="share-toggle" id="shareToggle" type="button" aria-expanded="false" aria-controls="sharePanel"
+            aria-label="Share KonnectX on social media">
+
+            <svg class="share-open-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <path d="m8.6 10.5 6.8-4" />
+                <path d="m8.6 13.5 6.8 4" />
+            </svg>
+
+            <svg class="share-close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" aria-hidden="true">
+                <path d="M6 6l12 12" />
+                <path d="M18 6L6 18" />
+            </svg>
+
+        </button>
+
+        <div class="share-panel" id="sharePanel" aria-label="Share KonnectX">
+
+            <p class="share-title">Share KonnectX</p>
+
+            <div class="share-links">
+
+                <!-- INSTAGRAM -->
+
+                <a class="share-link instagram"
+                    href="https://www.instagram.com/konnectxofficial?mdxt=MXh0eWZ6ZDZwc2FmZQ%3D%3D/" target="_blank"
+                    rel="noopener noreferrer">
+
+                    <span class="share-icon">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2" />
+                            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" />
+                            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+                        </svg>
+                    </span>
+
+                    <span class="share-text">
+                        <span class="share-name">Instagram</span>
+                        <span class="share-handle">@konnectxofficial</span>
+                    </span>
+
+                    <span class="share-go" aria-hidden="true">›</span>
+
+                </a>
+
+                <!-- WHATSAPP -->
+
+                <a class="share-link whatsapp" href="https://wa.me/919703492349" target="_blank"
+                    rel="noopener noreferrer">
+
+                    <span class="share-icon">
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path
+                                d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.5 0 .2 5.3.2 11.9c0 2.1.5 4.1 1.6 5.9L.1 24l6.3-1.7a11.9 11.9 0 0 0 5.7 1.5h.1c6.5 0 11.8-5.3 11.8-11.9a11.8 11.8 0 0 0-3.5-8.4Z"
+                                stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                            <path
+                                d="M8.5 7.5c-.3-.5-.6-.5-.9-.5h-.7c-.3 0-.7.1-1 .5-.3.4-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.3 2.4 3.8 5.9 5.2 2.9 1.2 3.5.9 4.1.8.6-.1 1.9-.8 2.2-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.7-.5-.4-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.3-.8.1-.4-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.4 0-.6.2-.8l.5-.6c.2-.2.2-.4.4-.6.1-.3 0-.5 0-.7-.1-.2-.7-1.8-1-2.5Z"
+                                fill="currentColor" />
+                        </svg>
+                    </span>
+
+                    <span class="share-text">
+                        <span class="share-name">WhatsApp</span>
+                        <span class="share-handle">+91 97034 92349</span>
+                    </span>
+
+                    <span class="share-go" aria-hidden="true">›</span>
+
+                </a>
+
+                <!-- LINKEDIN -->
+
+                <a class="share-link linkedin" href="https://www.linkedin.com/" target="_blank"
+                    rel="noopener noreferrer">
+
+                    <span class="share-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path
+                                d="M5.2 8.6H2V22h3.2V8.6ZM3.6 2a1.86 1.86 0 1 0 0 3.72A1.86 1.86 0 0 0 3.6 2ZM22 14.3c0-4.03-2.15-5.9-5.02-5.9a4.34 4.34 0 0 0-3.91 2.15V8.6H9.85V22h3.22v-6.63c0-1.75.33-3.45 2.5-3.45 2.14 0 2.17 2 2.17 3.56V22H22v-7.7Z" />
+                        </svg>
+                    </span>
+
+                    <span class="share-text">
+                        <span class="share-name">LinkedIn</span>
+                        <span class="share-handle">KonnectX Official</span>
+                    </span>
+
+                    <span class="share-go" aria-hidden="true">›</span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==============================
      HOME PAGE
 ============================== -->
 
@@ -1246,6 +2425,126 @@
         <p class="brand-tagline">Connections that create opportunities</p>
 
         <section class="content-wrapper">
+
+            <!-- MAGAZINE CAROUSEL -->
+
+            <div class="mag-carousel">
+
+                <div class="mag-banner" aria-roledescription="carousel" aria-label="KonnectX magazine highlights">
+
+                    <div class="mag-track">
+
+                        <!-- SLIDE 1 -->
+
+                        <article class="mag-slide is-active" aria-hidden="false">
+
+                            <div class="mag-copy">
+
+                                <p class="mag-title">Magazine</p>
+
+                                <p class="mag-sub">Latest edition, stories and highlights.</p>
+
+                            </div>
+
+                            <div class="mag-visual">
+                                <img class="mag-photo" src="./assets/magazine.svg" alt="KonnectX magazine spread"
+                                    loading="lazy">
+                            </div>
+
+                        </article>
+
+                        <!-- SLIDE 2 -->
+
+                        <article class="mag-slide" aria-hidden="true">
+
+                            <div class="mag-copy">
+
+                                <p class="mag-title">Brochure</p>
+
+                                <p class="mag-sub">The complete KonnectX story in one fold.</p>
+
+                            </div>
+
+                            <div class="mag-visual">
+                                <img class="mag-photo" src="./assets/brochure.svg" alt="KonnectX tri-fold brochure"
+                                    loading="lazy">
+                            </div>
+
+                        </article>
+
+                        <!-- SLIDE 3 -->
+
+                        <article class="mag-slide" aria-hidden="true">
+
+                            <div class="mag-copy">
+
+                                <p class="mag-title">Gift Hamper</p>
+
+                                <p class="mag-sub">Curated gifting for partners and guests.</p>
+
+                            </div>
+
+                            <div class="mag-visual">
+                                <img class="mag-photo" src="./assets/gift-hamper.svg" alt="KonnectX gift hamper"
+                                    loading="lazy">
+                            </div>
+
+                        </article>
+
+                        <!-- SLIDE 4 -->
+
+                        <article class="mag-slide" aria-hidden="true">
+
+                            <div class="mag-copy">
+
+                                <p class="mag-title">Client Company Video</p>
+
+                                <p class="mag-sub">Watch our work and partners on screen.</p>
+
+                            </div>
+
+                            <div class="mag-visual">
+                                <img class="mag-photo" src="./assets/client-video.svg"
+                                    alt="KonnectX client company video" loading="lazy">
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                    <button class="mag-arrow mag-prev" type="button" aria-label="Previous highlight">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="m15 5-7 7 7 7" />
+                        </svg>
+                    </button>
+
+                    <button class="mag-arrow mag-next" type="button" aria-label="Next highlight">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="m9 5 7 7-7 7" />
+                        </svg>
+                    </button>
+
+                </div>
+
+                <div class="mag-dots" role="tablist" aria-label="Choose highlight">
+
+                    <button class="mag-dot is-active" type="button" role="tab" aria-selected="true"
+                        aria-label="Magazine"></button>
+
+                    <button class="mag-dot" type="button" role="tab" aria-selected="false"
+                        aria-label="Brochure"></button>
+
+                    <button class="mag-dot" type="button" role="tab" aria-selected="false"
+                        aria-label="Gift Hamper"></button>
+
+                    <button class="mag-dot" type="button" role="tab" aria-selected="false"
+                        aria-label="Client Company Video"></button>
+
+                </div>
+
+            </div>
 
             <!-- APPLICATION SCANNER -->
 
@@ -1312,6 +2611,53 @@
 
             </a>
 
+            <!-- MOBILE SOCIAL LINKS -->
+
+            <div class="mobile-social" aria-label="Follow KonnectX">
+
+                <a class="social-instagram" href="https://www.instagram.com/konnectxofficial?mdxt=MXh0eWZ6ZDZwc2FmZQ%3D%3D/"
+                    target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2" />
+                        <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" />
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+                    </svg>
+
+                    <span>Instagram</span>
+
+                </a>
+
+                <a class="social-whatsapp" href="https://wa.me/919703492349" target="_blank" rel="noopener noreferrer"
+                    aria-label="WhatsApp">
+
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path
+                            d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.5 0 .2 5.3.2 11.9c0 2.1.5 4.1 1.6 5.9L.1 24l6.3-1.7a11.9 11.9 0 0 0 5.7 1.5h.1c6.5 0 11.8-5.3 11.8-11.9a11.8 11.8 0 0 0-3.5-8.4Z"
+                            stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+                        <path
+                            d="M8.5 7.5c-.3-.5-.6-.5-.9-.5h-.7c-.3 0-.7.1-1 .5-.3.4-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.3 2.4 3.8 5.9 5.2 2.9 1.2 3.5.9 4.1.8.6-.1 1.9-.8 2.2-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.7-.5-.4-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.3-.8.1-.4-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.4 0-.6.2-.8l.5-.6c.2-.2.2-.4.4-.6.1-.3 0-.5 0-.7-.1-.2-.7-1.8-1-2.5Z"
+                            fill="currentColor" />
+                    </svg>
+
+                    <span>WhatsApp</span>
+
+                </a>
+
+                <a class="social-linkedin" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"
+                    aria-label="LinkedIn">
+
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M5.2 8.6H2V22h3.2V8.6ZM3.6 2a1.86 1.86 0 1 0 0 3.72A1.86 1.86 0 0 0 3.6 2ZM22 14.3c0-4.03-2.15-5.9-5.02-5.9a4.34 4.34 0 0 0-3.91 2.15V8.6H9.85V22h3.22v-6.63c0-1.75.33-3.45 2.5-3.45 2.14 0 2.17 2 2.17 3.56V22H22v-7.7Z" />
+                    </svg>
+
+                    <span>LinkedIn</span>
+
+                </a>
+
+            </div>
+
         </section>
 
     </main>
@@ -1320,70 +2666,9 @@
      SOCIAL MEDIA
 ============================== -->
 
-    <section class="social-section" aria-label="Social media accounts">
+    <section class="social-section" aria-label="Site credit">
 
-        <div class="social-arc">
-
-            <!-- INSTAGRAM -->
-
-            <a class="social-link instagram"
-                href="https://www.instagram.com/konnectxofficial?mdxt=MXh0eWZ6ZDZwc2FmZQ%3D%3D/" target="_blank"
-                rel="noopener noreferrer" aria-label="Instagram">
-
-                <svg viewBox="0 0 24 24" fill="none">
-
-                    <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2" />
-
-                    <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" />
-
-                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
-
-                </svg>
-
-                <span>Instagram</span>
-
-            </a>
-
-            <!-- WHATSAPP -->
-
-            <a class="social-link whatsapp" href="https://wa.me/919703492349" target="_blank" rel="noopener noreferrer"
-                aria-label="WhatsApp">
-
-                <svg viewBox="0 0 24 24" fill="none">
-
-                    <path
-                        d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.5 0 .2 5.3.2 11.9c0 2.1.5 4.1 1.6 5.9L.1 24l6.3-1.7a11.9 11.9 0 0 0 5.7 1.5h.1c6.5 0 11.8-5.3 11.8-11.9a11.8 11.8 0 0 0-3.5-8.4Z"
-                        stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
-
-                    <path
-                        d="M8.5 7.5c-.3-.5-.6-.5-.9-.5h-.7c-.3 0-.7.1-1 .5-.3.4-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.3 2.4 3.8 5.9 5.2 2.9 1.2 3.5.9 4.1.8.6-.1 1.9-.8 2.2-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.7-.5-.4-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.3-.8.1-.4-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.4 0-.6.2-.8l.5-.6c.2-.2.2-.4.4-.6.1-.3 0-.5 0-.7-.1-.2-.7-1.8-1-2.5Z"
-                        fill="currentColor" />
-
-                </svg>
-
-                <span>WhatsApp</span>
-
-            </a>
-
-            <!-- LINKEDIN -->
-
-            <a class="social-link linkedin" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer"
-                aria-label="LinkedIn">
-
-                <svg viewBox="0 0 24 24" fill="currentColor">
-
-                    <path
-                        d="M5.2 8.6H2V22h3.2V8.6ZM3.6 2a1.86 1.86 0 1 0 0 3.72A1.86 1.86 0 0 0 3.6 2ZM22 14.3c0-4.03-2.15-5.9-5.02-5.9a4.34 4.34 0 0 0-3.91 2.15V8.6H9.85V22h3.22v-6.63c0-1.75.33-3.45 2.5-3.45 2.14 0 2.17 2 2.17 3.56V22H22v-7.7Z" />
-
-                </svg>
-
-                <span>LinkedIn</span>
-
-            </a>
-
-        </div>
-
-        <p class="powered-by">Powered by <span>kodewar</span></p>
+        <p class="powered-by">Powered by <span>kodewar Technologies</span></p>
 
     </section>
 
@@ -1397,6 +2682,189 @@
         /* ICON INITIALIZATION */
 
         lucide.createIcons();
+
+
+        /* ==============================
+           SHARE WIDGET
+        ============================== */
+
+        (() => {
+
+            const widget = document.querySelector(".share-widget");
+
+            if (!widget) return;
+
+            const toggle = widget.querySelector(".share-toggle");
+
+            const panel = widget.querySelector(".share-panel");
+
+            const links = panel.querySelectorAll(".share-link");
+
+            function setOpen(open) {
+
+                toggle.classList.toggle("is-open", open);
+                panel.classList.toggle("is-open", open);
+
+                toggle.setAttribute("aria-expanded", open ? "true" : "false");
+
+                toggle.setAttribute(
+                    "aria-label",
+                    open ? "Close share menu" : "Share KonnectX on social media"
+                );
+
+            }
+
+            toggle.addEventListener("click", event => {
+
+                event.stopPropagation();
+
+                setOpen(!panel.classList.contains("is-open"));
+
+            });
+
+            links.forEach(link => {
+
+                link.addEventListener("click", () => setOpen(false));
+
+            });
+
+            document.addEventListener("click", event => {
+
+                if (!widget.contains(event.target)) setOpen(false);
+
+            });
+
+            document.addEventListener("keydown", event => {
+
+                if (event.key === "Escape") setOpen(false);
+
+            });
+
+        })();
+
+
+        /* ==============================
+           MAGAZINE CAROUSEL
+        ============================== */
+
+        (() => {
+
+            const banner = document.querySelector(".mag-banner");
+
+            if (!banner) return;
+
+            const slides = Array.from(banner.querySelectorAll(".mag-slide"));
+
+            const dots = Array.from(document.querySelectorAll(".mag-dot"));
+
+            function getDelay() {
+
+                return 2000;
+
+            }
+
+            let current = 0;
+            let timer = null;
+
+            function show(index) {
+
+                current = (index + slides.length) % slides.length;
+
+                slides.forEach((slide, i) => {
+
+                    const active = i === current;
+
+                    slide.classList.toggle("is-active", active);
+
+                    slide.setAttribute("aria-hidden", active ? "false" : "true");
+
+                    if (active) {
+                        slide.removeAttribute("tabindex");
+                    } else {
+                        slide.setAttribute("tabindex", "-1");
+                    }
+
+                });
+
+                dots.forEach((dot, i) => {
+
+                    dot.classList.toggle("is-active", i === current);
+
+                    dot.setAttribute("aria-selected", i === current ? "true" : "false");
+
+                });
+
+            }
+
+            function stop() {
+
+                if (timer) {
+                    clearInterval(timer);
+                    timer = null;
+                }
+
+            }
+
+            function start() {
+
+                stop();
+
+                timer = setInterval(() => show(current + 1), getDelay());
+
+            }
+
+            banner.querySelector(".mag-prev")
+                ?.addEventListener("click", () => {
+                    show(current - 1);
+                    start();
+                });
+
+            banner.querySelector(".mag-next")
+                ?.addEventListener("click", () => {
+                    show(current + 1);
+                    start();
+                });
+
+            dots.forEach((dot, i) => {
+
+                dot.addEventListener("click", () => {
+                    show(i);
+                    start();
+                });
+
+            });
+
+            banner.addEventListener("mouseenter", stop);
+            banner.addEventListener("mouseleave", start);
+            banner.addEventListener("focusin", stop);
+            banner.addEventListener("focusout", start);
+
+            let startX = null;
+
+            banner.addEventListener("touchstart", event => {
+                startX = event.touches[0].clientX;
+            }, { passive: true });
+
+            banner.addEventListener("touchend", event => {
+
+                if (startX === null) return;
+
+                const delta = event.changedTouches[0].clientX - startX;
+
+                startX = null;
+
+                if (Math.abs(delta) < 40) return;
+
+                show(current + (delta < 0 ? 1 : -1));
+
+                start();
+
+            }, { passive: true });
+
+            show(0);
+            start();
+
+        })();
 
 
         /* NAVIGATION */
@@ -1833,7 +3301,7 @@
 
         document
             .getElementById("venueForm")
-            .addEventListener("submit", function (event) {
+            ?.addEventListener("submit", function (event) {
 
                 event.preventDefault();
 
