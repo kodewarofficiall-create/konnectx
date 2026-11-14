@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KonnectKX | Website QR Code</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fa;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            color: #172033;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 460px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 12px 45px rgba(20, 35, 60, 0.08);
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: #172033;
+            margin-bottom: 8px;
+        }
+
+        .logo span {
+            color: #2878ed;
+        }
+
+        .tagline {
+            font-size: 13px;
+            color: #8992a3;
+            margin-bottom: 28px;
+        }
+
+        .heading {
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #7b8494;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .qr-wrapper {
+            background: #f8faff;
+            border: 1px solid #e8edf5;
+            border-radius: 16px;
+            padding: 22px;
+            margin: 25px 0;
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #qrcode img,
+        #qrcode canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .qr-label {
+            font-size: 12px;
+            color: #929aaa;
+            margin-top: 15px;
+        }
+
+        .url-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            background: #f5f7fa;
+            border: 1px solid #e8ecf2;
+            border-radius: 10px;
+            padding: 13px;
+            margin-bottom: 18px;
+        }
+
+        .url {
+            font-size: 13px;
+            color: #3d495b;
+            overflow-wrap: anywhere;
+        }
+
+        .copy-btn {
+            border: none;
+            background: transparent;
+            color: #2878ed;
+            cursor: pointer;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .download-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #246fe5;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .download-btn:hover {
+            background: #1559c5;
+            transform: translateY(-1px);
+        }
+
+        .note {
+            margin-top: 22px;
+            font-size: 12px;
+            color: #8791a1;
+            line-height: 1.7;
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #a0a8b5;
+        }
+
+        .footer strong {
+            color: #2878ed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="logo">Konnect<span>KX</span></div>
+
+        <div class="tagline">Connect. Explore. Discover.</div>
+
+        <h2 class="heading">Scan to Visit Our Website</h2>
+
+        <p class="description">
+            Scan this QR code using your mobile camera
+            to visit the official KonnectKX website.
+        </p>
+
+        <div class="qr-wrapper">
+            <div id="qrcode"></div>
+            <div class="qr-label">SCAN ME TO EXPLORE</div>
+        </div>
+
+        <div class="url-box">
+            <span class="url" id="websiteURL">
+                https://www.konnectkx.com/
+            </span>
+
+            <button class="copy-btn" onclick="copyURL()">
+                Copy
+            </button>
+        </div>
+
+        <button class="download-btn" onclick="downloadQR()">
+            ↓ &nbsp; Download QR Code
+        </button>
+
+        <p class="note">
+            ✓ Free to use &nbsp; • &nbsp;
+            ✓ No subscription &nbsp; • &nbsp;
+            ✓ No expiry date
+        </p>
+
+        <div class="footer">
+            Powered by <strong>KonnectKX</strong>
+        </div>
+
+    </div>
+
+    <script>
+
+        const website = "https://www.konnectkx.com/";
+
+        new QRCode(document.getElementById("qrcode"), {
+            text: website,
+            width: 250,
+            height: 250,
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        function downloadQR() {
+
+            const canvas = document.querySelector("#qrcode canvas");
+
+            if (!canvas) {
+                alert("QR code is still generating. Try again.");
+                return;
+            }
+
+            const link = document.createElement("a");
+
+            link.href = canvas.toDataURL("image/png");
+            link.download = "KonnectKX-QR-Code.png";
+
+            link.click();
+        }
+
+        async function copyURL() {
+
+            try {
+                await navigator.clipboard.writeText(website);
+
+                document.querySelector(".copy-btn").textContent = "Copied!";
+
+                setTimeout(() => {
+                    document.querySelector(".copy-btn").textContent = "Copy";
+                }, 2000);
+
+            } catch {
+                alert("Unable to copy. Please copy the URL manually.");
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
