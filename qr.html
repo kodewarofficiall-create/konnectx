@@ -78,6 +78,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background: #ffffff;
+            /* White quiet zone so the code stays scannable */
+            padding: 16px;
+            border-radius: 8px;
         }
 
         #qrcode img,
@@ -206,16 +210,70 @@
 
         const website = "https://www.konnectkx.com/";
 
-        new QRCode(document.getElementById("qrcode"), {
+        // Mandatory white border around a QR code, measured in modules.
+        const QUIET_ZONE_MODULES = 4;
+
+        const qrCode = new QRCode(document.getElementById("qrcode"), {
             text: website,
             width: 250,
             height: 250,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
             correctLevel: QRCode.CorrectLevel.H
         });
 
+        /**
+         * Rebuilds the QR from its module data at high resolution, so the
+         * exported PNG has crisp integer-sized modules and a proper quiet
+         * zone. The canvas produced by qrcodejs has no border at all, which
+         * is why the on-page code scanned but the downloaded file did not.
+         */
+        function buildPrintableQR() {
+
+            const moduleData = qrCode._oQRCode;
+
+            if (!moduleData || typeof moduleData.isDark !== "function") {
+                return null;
+            }
+
+            const moduleCount = moduleData.getModuleCount();
+            const scale = 20; // pixels per module
+            const size = (moduleCount + QUIET_ZONE_MODULES * 2) * scale;
+
+            const canvas = document.createElement("canvas");
+            canvas.width = size;
+            canvas.height = size;
+
+            const ctx = canvas.getContext("2d");
+            const offset = QUIET_ZONE_MODULES * scale;
+
+            // Solid white: this is both the quiet zone and the light modules.
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, size, size);
+
+            ctx.fillStyle = "#000000";
+
+            for (let row = 0; row < moduleCount; row++) {
+                for (let col = 0; col < moduleCount; col++) {
+                    if (moduleData.isDark(row, col)) {
+                        ctx.fillRect(
+                            offset + col * scale,
+                            offset + row * scale,
+                            scale,
+                            scale
+                        );
+                    }
+                }
+            }
+
+            return canvas;
+        }
+
         function downloadQR() {
 
-            const canvas = document.querySelector("#qrcode canvas");
+            const canvas =
+                buildPrintableQR() ||
+                document.querySelector("#qrcode canvas");
 
             if (!canvas) {
                 alert("QR code is still generating. Try again.");
@@ -227,7 +285,9 @@
             link.href = canvas.toDataURL("image/png");
             link.download = "KonnectKX-QR-Code.png";
 
+            document.body.appendChild(link);
             link.click();
+            link.remove();
         }
 
         async function copyURL() {
